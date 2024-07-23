@@ -1,7 +1,7 @@
 #include "./logic.c"
 
 int main(){
-    int len = 8;
+    int len;
     printf("Enter the length of Array: ");
     scanf("%d", &len);
 
