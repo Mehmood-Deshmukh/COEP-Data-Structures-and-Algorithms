@@ -95,13 +95,98 @@ int removeBeginning(List *l){
     return removedElement;
 }
 
-int removeNode(List *l, Node *n);
-void addNodeAtPosition(List *l, int data, int position);
-int length(List l);
+int removeNode(List *l, Node *n){
+    if(!*l || !n) return INT_MIN;
+
+    Node *removedNode;
+    int removedElement;
+
+    Node *temp = *l;
+    
+    if (temp == n){
+        removedNode = temp;
+        removedElement = temp->data;
+        free(removedNode);
+        *l = temp->next;
+        return removedElement;
+    }
+    
+
+    while(temp && temp->next != n){
+        temp = temp->next;
+    }
+
+    if (temp && temp->next) {
+        removedNode = temp->next;
+        removedElement = temp->next->data;
+        temp->next = temp->next->next;
+        free(removedNode);
+        return removedElement;
+    }
+    
+    return INT_MIN;
+}
+
+void addNodeAtPosition(List *l, int data, int position){
+    Node *newNode, *temp;
+    int i;
+
+    if (position < 0 || position > length(*l)){
+        return;
+    }
+    
+    newNode = (Node *) malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (position == 0) {
+        newNode->next = *l;
+        *l = newNode;
+    } else {
+        temp = *l;
+        for (i = 0; i < position - 1; i++){
+            temp = temp->next;
+        }
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    return;
+}
+int length(List l){
+    Node *temp = l;
+    int length = 0;
+    while (temp){
+        length++;
+        temp = temp->next;
+    }
+    return length;
+}
+
 void swapNodes(List * l, Node * n1, Node * n2);
-void fill(List *l, int number);
+
+void fill(List *l, int number){
+    if(number < 1) return;
+
+    for(int i = 0; i < number; i++){
+        append(l, rand() % 100 + 1);
+    }
+
+    return;
+}
+
 void reverseEven(List *l);
 int isPalindrome(List l);
 void removeDuplicates(List *l);
-void destroy(List *l);
+
+void destroy(List *l){
+    if (!*l) return;
+
+    while (*l){
+        removeBeginning(l);
+    }
+
+    return;
+}
+
 void removeAndInsert(List *l, Node *n, int index);
