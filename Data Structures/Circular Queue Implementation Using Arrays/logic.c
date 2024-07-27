@@ -5,6 +5,7 @@
 
 void init(Queue *q, int size){
     q->head = q->tail = -1;
+    q->count = 0;
     q->size = size;
     q->Q = (int *) malloc(sizeof(int) * size);
     return;
@@ -13,26 +14,30 @@ void init(Queue *q, int size){
 void enQueue(Queue *q, int data){
     if(isFull(*q)) return;
 
-    if(isEmpty(*q)) q->head++;
+    if(isEmpty(*q)) q->head = 0;
 
-    q->Q[++q->tail] = data;
+    q->tail = (q->tail + 1) % q->size;
+    q->Q[q->tail] = data;
+    q->count++;
     return;
 }
 
 int deQueue(Queue *q){
     if(isEmpty(*q)) return INT_MIN;
-
-    return q->Q[q->head++];
+    int data = q->Q[q->head];
+    q->count--;
+    q->head = (q->head + 1) % q->size;
+    return data;
 }
 
 int isEmpty(Queue q){
-    if (q.head == -1) return 1;
+    if (q.count == 0) return 1;
 
     return 0;
 }
 
 int isFull(Queue q){
-    if (q.tail == q.size - 1) return 1;
+    if (q.count == q.size) return 1;
     
     return 0;
 }
@@ -50,10 +55,9 @@ void display(Queue q){
     }
 
     printf("Printing The Queue: ");
-    for (int i = q.head; i <= q.tail; i++){
-        printf("%d | ", q.Q[i]);
+    for (int i = q.head; i < q.head + q.count; i++){
+        printf("%d | ", q.Q[i % q.size]);
     }
     
     printf("\b\b \n");
-    return;
 }
