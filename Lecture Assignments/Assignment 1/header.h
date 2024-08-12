@@ -15,3 +15,5 @@ Array merge(Array a1, Array a2);
 void sort(Array *a);
 void fill(Array *a);
 void reverse(Array *a);
+void printMenu();
+void handleChoice(int choice, Array *array);
