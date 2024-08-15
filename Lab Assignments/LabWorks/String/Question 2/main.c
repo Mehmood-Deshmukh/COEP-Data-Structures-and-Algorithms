@@ -2,6 +2,24 @@
 #include <string.h>
 
 
+
+char* _strtok(char *s, const char *delimiter);
+
+int main() {
+    char s[] = "Mehmood!Deshmukh,!Was,Here";
+    const char *delimiter = ",!";
+    char *token;
+
+    token = _strtok(s, delimiter);
+    int index = 1;
+    while (token != NULL) {
+        printf("Token %d: %s\n", index++, token);
+        token = _strtok(NULL, delimiter);
+    }
+
+    return 0;
+}
+
 // my function will accept multiple delimiters as a string and will work in all the cases: eg ",!;"
 char* _strtok(char *s, const char *delimiter) {
     static char *start = NULL;
@@ -53,19 +71,4 @@ char* _strtok(char *s, const char *delimiter) {
     }
 
     return token_start;
-}
-
-int main() {
-    char s[] = "Mehmood!Deshmukh,!Was,Here";
-    const char *delimiter = ",!";
-    char *token;
-
-    token = _strtok(s, delimiter);
-    int index = 1;
-    while (token != NULL) {
-        printf("Token %d: %s\n", index++, token);
-        token = _strtok(NULL, delimiter);
-    }
-
-    return 0;
 }
