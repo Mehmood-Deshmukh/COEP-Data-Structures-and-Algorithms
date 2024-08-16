@@ -4,15 +4,6 @@
 #define PI 3.14159265358979323846
 #define EPSILON 1e-10
 
-double factorial(int n) {
-    if (n == 0 || n == 1) return 1;
-    double foactorial = 1;
-    for (int i = 2; i <= n; i++) {
-        foactorial *= i;
-    }
-    return foactorial;
-}
-
 double normalize_angle(double x) {
     while (x > PI) x -= 2 * PI;
     while (x < -PI) x += 2 * PI;
@@ -23,12 +14,12 @@ double sine(double x) {
     x = normalize_angle(x);
     double term = x;
     double sum = x;
-    int n = 1;
+    int n = 3;
 
     while (fabs(term) > EPSILON) {
-        term *= -x * x / ((2 * n) * (2 * n + 1));
+        term *= -x * x / ((n) * (n - 1));
         sum += term;
-        n++;
+        n += 2;
     }
 
     return sum;
@@ -39,12 +30,12 @@ double cosine(double x) {
     x = normalize_angle(x);
     double term = 1;
     double sum = 1;
-    int n = 1;
+    int n = 2;
 
     while (fabs(term) > EPSILON) {
-        term *= -x * x / ((2 * n - 1) * (2 * n));
+        term *= -x * x / ((n) * (n - 1));
         sum += term;
-        n++;
+        n += 2;
     }
 
     return sum;
