@@ -1,6 +1,11 @@
+// Write a function which does the following
+// void rev(char *str);
+// Reverses the string "str" in place (without using another string).
+
 #include <stdio.h>
 #include <string.h>
 
+//function prototype
 void reverseString(char *str);
 
 int main() {
@@ -13,6 +18,7 @@ int main() {
     return 0;
 }
 
+//function to reverse string in place
 void reverseString(char *str){
     int len = strlen(str);
 

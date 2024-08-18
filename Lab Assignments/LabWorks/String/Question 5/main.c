@@ -1,6 +1,8 @@
+//  Write a function to find lcm() of 2 numbers
+
 #include <stdio.h>
 
-
+//function prototypes
 int gcd(int a, int b);
 int lcm(int a, int b);
 
@@ -12,6 +14,7 @@ int main() {
     return 0;
 }
 
+//function for calculating the GCD
 int gcd(int a, int b){
     while (b != 0) {
         int temp = b;
@@ -21,6 +24,7 @@ int gcd(int a, int b){
     return a;
 }
 
+// using the formula LCM = a * b / GCD
 int lcm(int a, int b){
     return a * b / gcd(a, b);
 }

@@ -1,13 +1,14 @@
+// Write the strtok() function.
+
 #include <stdio.h>
 #include <string.h>
 
-
-
-char* _strtok(char *s, const char *delimiter);
+//function prototype
+char* _strtok(char *s, char *delimiter);
 
 int main() {
-    char s[] = "Mehmood!Deshmukh,!Was,Here";
-    const char *delimiter = ",!";
+    char s[] = "Mehmood!Deshmukh,!Was,Here"; //this is the input string
+    char *delimiter = ",!"; // this is the sequence of delimeters
     char *token;
 
     token = _strtok(s, delimiter);
@@ -21,21 +22,23 @@ int main() {
 }
 
 // my function will accept multiple delimiters as a string and will work in all the cases: eg ",!;"
-char* _strtok(char *s, const char *delimiter) {
-    static char *start = NULL;
+char* _strtok(char *s, char *delimiter) {
+    static char *start = NULL; //static because we need to return the next token everytime
     char *token_start;
 
-    // if s is NULL means we have to tokenize the same string we did previously.same as the strtok function
+    // if s is NULL means we have to tokenize the same string we did previously. same as the strtok function
     if (s != NULL) {
         start = s;
     }
+
+    // if start is NULL which means there are no more tokens left so we will return NULL
     if (start == NULL) {
         return NULL;
     }
 
     //take care of leading delimiters
     while (*start) {
-        const char *d = delimiter;
+        char *d = delimiter; //compare each character with all the delimiters if any of them match increment the start
         while (*d) {
             if (*start == *d) {
                 ++start;
@@ -58,9 +61,9 @@ char* _strtok(char *s, const char *delimiter) {
     token_start = start;
 
     while (*start) {
-        const char *d = delimiter;
+        char *d = delimiter; // for each delimiter check if the current character matches any of them
         while (*d) {
-            if (*start == *d) {
+            if (*start == *d) { //if the current character matches any of the delimiter , replace it with null character and return the token
                 *start = '\0';
                 ++start;
                 return token_start;

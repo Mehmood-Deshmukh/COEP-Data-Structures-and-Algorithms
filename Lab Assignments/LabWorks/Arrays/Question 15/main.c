@@ -1,5 +1,5 @@
 /*
-Q10. Write code to find the second-largest element in a 1D array.
+Q15. Write code to find the second-largest element in a 1D array.
 */
 
 #include <stdio.h>
@@ -8,15 +8,16 @@ Q10. Write code to find the second-largest element in a 1D array.
 int findSecondLargest(int arr[], int size);
 
 int main() {
-    int arr[] = {12, 12, 12};
+    int arr[] = {12, 12, 24};
 
     int size = sizeof(arr) / sizeof(arr[0]);
 
     int secondLargest = findSecondLargest(arr, size);
     if(secondLargest == INT_MIN){
         printf("There is no second Largest element in the Array!\n");
+    }else{
+        printf("The second-largest element in the array is: %d\n", secondLargest);
     }
-    printf("The second-largest element in the array is: %d\n", secondLargest);
 
     return 0;
 }

@@ -3,48 +3,66 @@
 #include<stdlib.h>
 #include<limits.h>
 
-void init(Array *a, int size){
-    a->A = (int *)malloc(sizeof(int) * size);
-    if(!a->A) return;
 
-    a->size = size;
+//function to initialize the array
+void init(Array *a, int size){
+    a->A = (int *)malloc(sizeof(int) * size); //allocate memory
+    if(!a->A) return; // if memory allocation fails, return 
+
+    a->size = size; //set size
     a->len = 0;
 }
 
+//function to append an element to array
 void append(Array *a, int element){
-    if(a->len ==  a->size) return;
+    if(a->len ==  a->size) return; //if array is full return 
 
-    a->A[a->len++] = element;
+    a->A[a->len++] = element; // append element
     return;
 }
 
+// function to insert an element at a particular index
 void insertAtIndex(Array *a, int element, int position){
     int length = a->len;
-    if (length == a->size || position < 0 || position >= length) return;
+    // if the index is invalid or if the array is full return 
+    if (length == a->size || position < 0 || position > length) return; 
 
+    // shift elements to the next index
     for(int i = length; i >= position; i--){
         a->A[i] = a->A[i - 1];
     }
 
+    // add element at index
     a->A[position] = element;
-    a->len++;
+    a->len++; //increment the length
     return;
 }
 
+// function to remove element at a particular index
 int removeAtIndex(Array *a, int position){
     int length = a->len;
+    // if the index is invalid return 
     if (position < 0 || position >= length) return INT_MIN;
 
+    // store the element to remove as we will return it
     int removedElement = a->A[position];
+
+    // shift elements after the index to one position back
     for(int i = position + 1; i < length; i++){
         a->A[i - 1] = a->A[i];
     }
-    a->len--;
-    return removedElement;    
+    a->len--; //decrement the length
+    return removedElement; //return the removed element
 }
 
+// function to display the array
 void display(Array a){
     int length = a.len;
+    // if array is empty return 
+    if(length == 0){
+        printf("Array is empty!");
+        return;
+    }
 
     printf("Displaying Array: [");
 
@@ -53,24 +71,32 @@ void display(Array a){
         printf("%d, ", a.A[i]);
     }
 
-    printf("\b\b]\n");
+    printf("\b\b]\n"); //remove the ending comma
     return;    
 }
 
+
+// function to get the maximum element
 int max(Array a){
+    // if array is empty return 
     if(a.len == 0) return INT_MIN;
     int maxElement = a.A[0], length = a.len;
 
+    // traverse through entire array and check for the maximum element
     for(int i = 1; i < length; i++){
         int currentElement = a.A[i];
         if(currentElement > maxElement) maxElement = currentElement;
     }
     return maxElement; 
 }
+
+// function to get the minimum element
 int min(Array a){
+    // if array is empty return 
     if(a.len == 0) return INT_MAX;
     int minElement = a.A[0], length = a.len;
 
+    // traverse through entire array and check for the minimum element
     for(int i = 1; i < length; i++){
         int currentElement = a.A[i];
         if(currentElement < minElement) minElement = currentElement;
@@ -78,21 +104,26 @@ int min(Array a){
     return minElement; 
 }
 
-
+// function to merge two arrays
 Array merge(Array a1, Array a2){
-    Array merged;
+    Array merged; //create a new array
     int length1 = a1.len , length2 = a2.len;
-    init(&merged, length1 + length2);
+    init(&merged, length1 + length2); // initialze the new array with length = length1 + length2
+    
+    //append elements of first array
     for(int i = 0; i < length1; i++){
         append(&merged, a1.A[i]);
     }
 
+    //append elements of second array
     for(int i = 0; i < length2; i++){
         append(&merged, a2.A[i]);
     }
 
     return merged;
 }
+
+//simple selection sort algorithm
 
 void swap(int *x, int *y){
     int temp = *x;
@@ -113,17 +144,19 @@ void sort(Array *a){
     }
 }
 
+// function to fill array with random elements
 void fill(Array *a){
     int length = a->len;
 
     for (int i = length; i < a->size; i++){
-        a->A[i] = rand() % 100;
+        a->A[i] = rand() % 100; // random number from 0 - 99
     }
 
     a->len = a->size;
     return;  
 }
 
+// function to reverse an array
 void reverse(Array *a){
     int length = a->len, temp;
     for(int i = 0; i < length/2; i++){
@@ -133,98 +166,4 @@ void reverse(Array *a){
     }
 
     return;
-}
-
-void printMenu(){
-    printf("\n\n***********Array ADT Menu:***********\n\n");
-    printf("Select any of the instructions given below:\n");
-    printf("1. Initialize a new Array.\n");
-    printf("2. Append an element to an existing Array.\n");
-    printf("3. Insert element at a given index.\n");
-    printf("4. Remove element at a given index.\n");
-    printf("5. Display an Array.\n");
-    printf("6. Display the maximum element in an Array.\n");
-    printf("7. Display the minimum element in an Array.\n");
-    printf("8. Reverse an Array.\n");
-    printf("9. Merge two Arrays.\n");
-    printf("10. Exit\n");
-    printf("Enter your choice: ");
-}
-
-void handleChoice(int choice, Array *array){
-    switch (choice) {
-        case 1: {
-            int size;
-            printf("\nEnter the size of the Array: ");
-            scanf("%d", &size);
-            init(array, size);
-            printf("\nArray initialized with size %d.\n", size);
-            break;
-        }
-        case 2: {
-            int element;
-            printf("\nEnter the element to append to the Array: ");
-            scanf("%d", &element);
-            append(array, element);
-            printf("\nElement appended to array : %d.\n", element);
-            break;
-        }
-        case 3: {
-            int element, index;
-            printf("\nEnter the element to add to the Array: ");
-            scanf("%d", &element);
-            printf("\nEnter the index at which the element is to be added: ");
-            scanf("%d", &index);
-            insertAtIndex(array, element, index);
-            printf("\nElement %d inserted at index %d.\n", element, index);
-            break;
-        }
-        case 4: {
-            int index;
-            printf("\nEnter the index at which the element is to be removed: ");
-            scanf("%d", &index);
-            int removedElement = removeAtIndex(array, index);
-            printf("\nRemoved Element: %d\n", removedElement);
-            break;
-        }
-        case 5: {
-            display(*array);
-            break;
-        }
-        case 6: {
-            int maxElement = max(*array);
-            printf("\nMaximum element in the Array: %d\n", maxElement);
-            break;
-        }
-        case 7: {
-            int minElement = min(*array);
-            printf("\nMinimum element in the Array: %d\n", minElement);
-            break;
-        }
-        case 8: {
-            reverse(array);
-            printf("\nArray reversed.\n");
-            break;
-        }
-        case 9: {
-            Array array2, mergedArray;
-            int size;
-            printf("\nEnter the size of the second Array: ");
-            scanf("%d", &size);
-            init(&array2, size);
-            printf("\nFilling the second Array.\n");
-            fill(&array2);
-            mergedArray = merge(*array, array2);
-            printf("Arrays merged.\n");
-            display(mergedArray);
-            break;
-        }
-        case 10:
-            printf("\nExiting....\n");
-            exit(0);
-            break;
-        default:
-            printf("\nInvalid choice. Please try again.\n");
-            break;
-    }
 }

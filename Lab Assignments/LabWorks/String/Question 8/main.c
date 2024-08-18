@@ -1,3 +1,6 @@
+// What are wide characters? Write a sample code using wcscmp function. (You have to 
+// read wide character strings and then call wcscmp function)
+
 #include <stdio.h>
 #include <wchar.h>
 

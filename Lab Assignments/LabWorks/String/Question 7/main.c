@@ -1,7 +1,11 @@
+// Write your own code for following library functions:
+// strcasecmp strsep strcasecmp strcoll
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
+// function prototypes for starcasecmp and strsep
 int _strcasecmp(char *s1, char *s2);
 char *_strsep(char **s, char *delimiters);
 
@@ -30,7 +34,9 @@ int main() {
     return 0;
 }
 
+// this function compares two strings case insensitively
 int _strcasecmp(char *s1, char *s2){
+    //skip same characters
     while(tolower(*s1) == tolower(*s2)){
         if(!*s1) return 0;
 
@@ -38,28 +44,32 @@ int _strcasecmp(char *s1, char *s2){
         s2++;
     }
 
+    // return difference between the first different character
     return tolower(*s1) - tolower(*s2);
 }
 
-
-char *_strsep(char **stringp, char *delim) {
-    char *start = *stringp;
+//similar to strtok but it returns the first token it finds and it also modifies the input string
+char *_strsep(char **s, char *delimiters) {
+    char *start = *s;
     char *temp;              
 
     if (start == NULL) {
         return NULL;
     }
 
+    // for each delimiter check if current character matches it.
+    // if it matches replace it with '\0'
+    //set the string to start from the next character
     for (temp = start; *temp != '\0'; temp++) {
-        for (char *d = delim; *d != '\0'; d++) {
+        for (char *d = delimiters; *d != '\0'; d++) {
             if (*temp == *d) {
                 *temp = '\0';      
-                *stringp = temp + 1;
+                *s = temp + 1;
                 return start;
             }
         }
     }
 
-    *stringp = NULL;
+    *s = NULL;
     return start;
 }

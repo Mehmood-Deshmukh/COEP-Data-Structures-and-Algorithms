@@ -1,6 +1,10 @@
+// Write a program to reverse the digits of an integer and store the result as another 
+// integer.
+
 #include <stdio.h>
 #include<stdlib.h>
 
+//function prototype
 int reverse(int num);
 
 int main() {
@@ -11,6 +15,7 @@ int main() {
     return 0;
 }
 
+//function to reverse digits of an integer
 int reverse(int num){
     int result = 0;
 

@@ -9,7 +9,3 @@ void display(Polynomial p);
 Polynomial add(Polynomial p1, Polynomial p2);
 Polynomial substract(Polynomial p1, Polynomial p2);
 Polynomial multiply(Polynomial p1, Polynomial p2);
-
-
-
-

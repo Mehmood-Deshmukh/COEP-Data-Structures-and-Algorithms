@@ -61,8 +61,5 @@ int main(){
                    Students[i].rollNumber, averageMarks);
         }
     }
-
-
-
     return 0;
 }
