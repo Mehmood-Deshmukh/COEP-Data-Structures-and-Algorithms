@@ -15,3 +15,8 @@ void display(List l);
 int length(List l);
 void insertAtStart(List *l, int data);
 void insertAtIndex(List *l, int data, int index);
+int removeStart(List *l);
+int removeAtIndex(List *l, int index);
+int removeAtEnd(List *l);
+void destroy(List *l);
+void reverseList(List *l);
