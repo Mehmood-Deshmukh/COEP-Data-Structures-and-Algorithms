@@ -8,12 +8,13 @@
 // function prototypes for starcasecmp and strsep
 int _strcasecmp(char *s1, char *s2);
 char *_strsep(char **s, char *delimiters);
+int _strcoll(char *s1, char *s2);
 
 int main() {
     char str1[] = "Mehmood";
     char str2[] = "mehmood";
 
-    int result = strcasecmp(str1, str2);
+    int result = _strcasecmp(str1, str2);
 
     if (result == 0) {
         printf("'%s' and '%s' are the same (ignoring case).\n", str1, str2);
@@ -29,6 +30,16 @@ int main() {
 
     while ((token = _strsep(&stringp, ",")) != NULL) {
         printf("Token: '%s'\n", token);
+    }
+
+    int result2 = strcoll(str1, str2);
+
+    if (result2 == 0) {
+        printf("'%s' and '%s' are the same.\n", str1, str2);
+    } else if (result2 < 0) {
+        printf("'%s' is less than '%s'.\n", str1, str2);
+    } else {
+        printf("'%s' is greater than '%s'.\n", str1, str2);
     }
 
     return 0;
@@ -48,7 +59,7 @@ int _strcasecmp(char *s1, char *s2){
     return tolower(*s1) - tolower(*s2);
 }
 
-//similar to strtok but it returns the first token it finds and it also modifies the input string
+//similar to strtok but it also returns empty string when there are consecutive delimiters
 char *_strsep(char **s, char *delimiters) {
     char *start = *s;
     char *temp;              
@@ -72,4 +83,17 @@ char *_strsep(char **s, char *delimiters) {
 
     *s = NULL;
     return start;
+}
+
+int _strcoll(char *s1, char *s2){
+    //skip same characters
+    while(*s1 == *s2){
+        if(!*s1) return 0;
+
+        s1++;
+        s2++;
+    }
+
+    // return difference between the first different character
+    return *s1 - *s2;
 }

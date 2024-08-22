@@ -1,0 +1,17 @@
+typedef struct Node{
+    int data;
+    struct Node *next;
+    struct Node *prev;
+} Node;
+
+typedef struct List{
+    Node *head;
+    Node *tail;
+} List;
+
+void init(List *l);
+void append(List *l, int data);
+void display(List l);
+int length(List l);
+void insertAtStart(List *l, int data);
+void insertAtIndex(List *l, int data, int index);
