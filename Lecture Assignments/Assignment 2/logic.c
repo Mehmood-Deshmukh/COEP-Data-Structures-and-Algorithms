@@ -102,6 +102,29 @@ void insertAtStart(Ascii *l, int data){
     return;
 }
 
+//this is the helper function we used in the destroy function
+// this function frees the head and the head's next becomes the new head
+// we also handle the case of empty list by makin g l->tail point to NULL
+int removeStart(Ascii *l){
+    if(isEmpty(*l)) return INT_MIN;
+    Node *removedNode;
+    int removedElement;
+
+    removedNode = l->head; //Node to be removed
+    removedElement = removedNode->data; //element which we will return
+
+    l->head = removedNode->next;
+    if(isEmpty(*l)){
+        l->tail = NULL; //handling empty list case
+    }else {
+        l->head->prev = NULL;
+    }
+
+    free(removedNode); //freeing the Node
+
+    return removedElement;
+}
+
 
 //Following are some more helper function which I implemented.
 // they can be used to manipulate Doubly Linked Lists
@@ -172,25 +195,7 @@ void insertAtIndex(Ascii *l, int data, int index){
 }
 
 
-int removeStart(Ascii *l){
-    if(isEmpty(*l)) return INT_MIN;
-    Node *removedNode;
-    int removedElement;
 
-    removedNode = l->head;
-    removedElement = removedNode->data;
-
-    l->head = removedNode->next;
-    if(isEmpty(*l)){
-        l->tail = NULL;
-    }else {
-        l->head->prev = NULL;
-    }
-
-    free(removedNode);
-
-    return removedElement;
-}
 
 int removeAtIndex(Ascii *l, int index){
     if(isEmpty(*l) || index < 0 || index > length(*l)) return INT_MIN;
