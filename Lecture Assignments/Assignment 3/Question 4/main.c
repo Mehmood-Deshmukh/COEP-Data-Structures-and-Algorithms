@@ -25,7 +25,7 @@ int main(){
 }
 
 /*
-we will solve this problem using the approach mentioned above.
+we will solve this problem using the approach mentioned above.  
 */
 int decimalToBinary(int num){
     Stack s;
