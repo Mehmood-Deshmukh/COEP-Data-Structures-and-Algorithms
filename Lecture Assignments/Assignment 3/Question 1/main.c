@@ -1,4 +1,4 @@
-#include "logic.c"
+#include "header.h"
 
 int main(){
     Stacks s;
