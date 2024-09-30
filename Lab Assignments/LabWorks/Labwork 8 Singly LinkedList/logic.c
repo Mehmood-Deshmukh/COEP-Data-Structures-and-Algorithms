@@ -1,60 +1,134 @@
+#include "./header.h" /*Including the header file*/
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include "./header.h"
+#include <stdlib.h>  /* the C standard Library for functions like malloc  */
+#include <limits.h>  /* includes constants like INT_MIN / INT_MAX */
 
+
+/*
+to initialize our ADT we need a notion of an empty list which is possible 
+when our List will point to NULL 
+so we will initialize our ADT by making the List point to 
+NULL 
+*/
 void init(List *l){
     *l = NULL;
-    return;
+    return; /* make l point to NULL*/
 }
 
+/*
+to traverse and display the list we need a temporary pointer which will 
+point to the first node . while the temp is not pointing to null we will print the 
+node's data and increment temp to point to the next Node 
+
+if the list is empty we simply return
+*/
+
 void display(List l){
-    if(!l){
+    if(!l){  // if empty.. return
         printf("LinkedList is Empty\n");
         return;
     }
 
-    printf("Linked List: ");
-    while (l) {
+    printf("Linked List: "); // traverse and print each element
+    while (l) { 
         printf(" %d ->", l->data);
         l = l->next;
     }
-    printf("\b\b   \n");
+    printf("\b\b   \n"); // get rid of the trailing '<->'
     return;
 }
 
+/*
+to append a new element we simply traverse to the end of the list and then just add the newNode as the next of the current last Node
+
+we also handle the case when the list is empty
+*/
+
 void append(List *l, int data){
     Node *newNode = (Node *) malloc(sizeof(Node));
-    if (!newNode) {
+    if (!newNode) { // return if memory allocation fails
         return;
     }
     
     newNode->data = data;
     newNode->next = NULL;
 
-    if(!*l){
+    if(!*l){ // if list is empty this becomes the first Node
         *l = newNode;
         return;
     }
 
     Node *temp = *l;
 
-    while(temp->next != NULL){
+    while(temp->next != NULL){ // traverse to the last Node
         temp = temp->next;
     }
-    temp->next = newNode;
+    temp->next = newNode; //add the newNode to the end
     return;
 }
+
+/*
+This function adds an element at the begginning of the list
+the newNode's next will point to the first Node and the newNode will become the first Node
+*/
 void insertAtBeginning(List *l, int data){
     Node *newNode = (Node *) malloc(sizeof(Node));
-    if (!newNode) return;
+    if (!newNode) return;  // return if memory allocation fails
     
     newNode->data = data;
-    newNode->next = *l;
+    newNode->next = *l; // newNode will point the first Node
 
-    *l = newNode;
+    *l = newNode; // newNode becomes the first Node
     return;
 }
+
+/*
+This function removes element at a given index by first traversing to the previous index and then making it point to the next node of the Node to be removed
+*/
+int removeAtIndex(List *l, int index){
+    // check for invalid conditions
+    if(!*l || index < 0 || index > length(*l)) return INT_MIN;
+    if(index == 0){
+        return removeBeginning(l);
+    }
+
+    Node *removedNode, *temp = *l;
+    int removedElement;
+
+    for(int i = 0; i < index - 1; i++){ //traverse to the previous index
+        temp = temp->next;
+    }
+
+    removedNode = temp->next;
+    temp->next = removedNode->next; // change the links
+    removedElement = removedNode->data;
+    free(removedNode); //free the removed Node
+
+    return removedElement; // return removed Element
+}
+
+
+/*
+This function returns the length of the List By traversing the entire list and incrementing the count each time
+*/
+int length(List l){
+    Node *temp = l;
+    int length = 0;
+    while (temp){ //traverse the entire list
+        length++; //increment the length
+        temp = temp->next;
+    }
+    return length;
+}
+
+/* Extra function */
+
+/*
+to remove the last element we simply traverse to second last Node. keep a pointer to last Node.
+make the second last Node point to NULL. free the last Node and return the last element
+
+we also handle the case when we have a single element in the list
+*/
 int removeEnd(List *l){
     Node *temp, *removedNode;
     int removedElement;
@@ -152,15 +226,7 @@ void addNodeAtPosition(List *l, int data, int position){
 
     return;
 }
-int length(List l){
-    Node *temp = l;
-    int length = 0;
-    while (temp){
-        length++;
-        temp = temp->next;
-    }
-    return length;
-}
+
 
 void swapNodes(List * l, Node * n1, Node * n2){
     if (n1 == n2 || !n1 || !n2 || !(*l)) return;
