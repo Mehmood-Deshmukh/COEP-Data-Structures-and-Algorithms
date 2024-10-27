@@ -100,12 +100,25 @@ char *removeNode(BST *root, char *month) {
 }
 
 void traverse(BST root) {
-    if (root == NULL) {
-        return;
+    Node *current = root;
+    while (current->left != NULL) {
+        current = current->left;
     }
-    traverse(root->left);
-    printf("%s\n", root->month);
-    traverse(root->right);
+    while (current != NULL) {
+        printf("%s ", current->month);
+        if (current->right != NULL) {
+            current = current->right;
+            while (current->left != NULL) {
+                current = current->left;
+            }
+        } else {
+            while (current->parent != NULL && current->parent->right == current) {
+                current = current->parent;
+            }
+            current = current->parent;
+        }
+    }
+    printf("\n");
 }
 
 void destroyTree(BST *root) {
@@ -114,7 +127,7 @@ void destroyTree(BST *root) {
     }
     destroyTree(&(*root)->left);
     destroyTree(&(*root)->right);
+    free((*root)->month);
     free(*root);
-    *root = NULL;
 }
 
