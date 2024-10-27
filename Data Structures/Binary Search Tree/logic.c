@@ -97,13 +97,18 @@ void recursive_delete_node(BST *root, int key){
         recursive_delete_node(&(*root)->right, key);
     }else{
         if(!(*root)->left && !(*root)->right){
+            free(*root);
             *root = NULL;
             return;
         }else if(!(*root)->left){
+            Node *temp = *root;
             *root = (*root)->right;
+            free(temp);
             return;
         }else if(!(*root)->right){
+            Node *temp = *root;
             *root = (*root)->left;
+            free(temp);
             return;
         }else{
             Node *temp = get_left_most((*root)->right);
@@ -139,7 +144,7 @@ void iterative_delete_node(BST *root, int key){
         }else{
             *root = NULL;
         }
-
+        free(temp);
         return;
 
     }else if(!temp->left){
@@ -149,7 +154,7 @@ void iterative_delete_node(BST *root, int key){
         }else{
             *root = temp->right;
         }
-
+        free(temp);
         return;
 
     }else if(!temp->right){
@@ -159,7 +164,7 @@ void iterative_delete_node(BST *root, int key){
         }else{
             *root = temp->left;
         }
-
+        free(temp);
         return;
         
     }else{
@@ -174,6 +179,7 @@ void iterative_delete_node(BST *root, int key){
         if(parent->left == successor) parent->left = successor->right;
         else parent->right = successor->right;
 
+        free(successor);
         return;
     }
 }
