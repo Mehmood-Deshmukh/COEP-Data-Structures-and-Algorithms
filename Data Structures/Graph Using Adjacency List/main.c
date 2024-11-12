@@ -10,13 +10,13 @@ int main(int argc, char *argv[]){
 
     Graph g;
     create_graph_from_file(&g, argv[1]);
-    /* print_adjacency_matrix(g);
-    printf("\n"); */
-/*     for(int i = 0; i < g.vertices; i++){
+    print_adjacency_matrix(g);
+    printf("\n"); 
+    for(int i = 0; i < g.vertices; i++){
         breadth_first_search(g, i);
     }
 
-    printf("\n"); */
+    printf("\n"); 
 
     for(int i = 0; i < g.vertices; i++){
         depth_first_search(g, i);
@@ -29,14 +29,14 @@ int main(int argc, char *argv[]){
 
     printf("\n");
 
-    /* for(int i = 0; i < g.vertices; i++){
+    for(int i = 0; i < g.vertices; i++){
         Edge *mst = minimum_spanning_tree(g, i);
         for(int j = 0; j < g.vertices - 1; j++){
             printf("%d-%d ", mst[j].start_vertex, mst[j].end_vertex);
         }
         printf("\n");
         free(mst);
-    } */
+    } 
 
     printf("is the graph cyclic ? %s\n", detect_cycle(g) ? "true" : "false");
     

@@ -136,7 +136,7 @@ void iterative_depth_first_search(Graph graph, int start_vertex){
             visited[current_vertex] = 1;
         }
 
-        for(int i = vertices - 1; i >= 0; i--){
+        for(int i = 0; i < vertices; i++){
             if(graph.adjacency_matrix[current_vertex][i] && !visited[i]){
                 push(&stack, i);
             }
@@ -192,8 +192,9 @@ Edge *minimum_spanning_tree(Graph graph, int start_vertex){
     int edge_count = 0, min_weight = INT_MAX;
 
     visited[start_vertex] = 1;
-
+    int total_weight = 0;
     Edge edge;
+
 
     while(edge_count < vertices - 1){
         min_weight = INT_MAX;
@@ -212,12 +213,13 @@ Edge *minimum_spanning_tree(Graph graph, int start_vertex){
         if(min_weight == INT_MAX){
             break;
         }
-
+        total_weight += min_weight;
         visited[edge.end_vertex] = 1;
         edges[edge_count++] = edge;
     }
 
     free(visited);
+    printf("Total weight of the minimum spanning tree is %d when started from %d\n", total_weight, start_vertex);
     return edges;
 }
 
