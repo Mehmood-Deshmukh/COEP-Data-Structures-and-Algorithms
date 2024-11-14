@@ -10,41 +10,45 @@ void init(Queue *q, int size){
     return;
 }
 
-void enQueue(Queue *q, int data){
-    if(isFull(*q)) return;
+void enqueue(Queue *q, int data){
+    if(is_full(*q)) return;
 
-    if(isEmpty(*q)) q->head++;
+    if(is_empty(*q)) q->head++;
 
     q->Q[++q->tail] = data;
     return;
 }
 
-int deQueue(Queue *q){
-    if(isEmpty(*q)) return INT_MIN;
+int dequeue(Queue *q){
+    if(is_empty(*q)) return INT_MIN;
 
-    return q->Q[q->head++];
+    int data = q->Q[q->head++];
+
+    if(q->head > q->tail) q->head = q->tail = -1;
+
+    return data;
 }
 
-int isEmpty(Queue q){
+int is_empty(Queue q){
     if (q.head == -1) return 1;
 
     return 0;
 }
 
-int isFull(Queue q){
+int is_full(Queue q){
     if (q.tail == q.size - 1) return 1;
     
     return 0;
 }
 
 int peek(Queue q){
-    if(isEmpty(q)) return INT_MIN;
+    if(is_empty(q)) return INT_MIN;
 
     return q.Q[q.head];
 }
 
 void display(Queue q){
-    if(isEmpty(q)) {
+    if(is_empty(q)) {
         printf("The Queue is Empty!");
         return;
     }

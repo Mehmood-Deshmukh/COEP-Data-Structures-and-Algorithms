@@ -25,4 +25,3 @@ void iterative_depth_first_search(Graph graph, int start_vertex);
 Edge *minimum_spanning_tree(Graph graph, int start_vertex);
 int detect_cycle(Graph graph);
 void free_graph(Graph *graph);
-

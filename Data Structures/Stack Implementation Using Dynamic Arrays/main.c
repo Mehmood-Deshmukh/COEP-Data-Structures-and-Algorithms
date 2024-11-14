@@ -1,16 +1,23 @@
 #include <stdio.h>
-#include "logic.c"
+#include "header.h"
 
 int main() {
     Stack s;
-    init(&s, 1);
+    init(&s);
     display(s);
-    printf("Is the Stack Empty? %d\n", isEmpty(s));
+    printf("Is the Stack Empty? %d\n", is_empty(s));
 
-    push(&s, 1);
-    push(&s, 2);
+    push(&s, 8);
+    push(&s, 6);
     push(&s, 3);
+    push(&s, 2);
+    push(&s, 12);
+    push(&s, 21);
+    push(&s, 1);
 
+    display(s);
+    sort(&s);
+    printf("Sorted Stack: ");
     display(s);
 
     pop(&s);
@@ -22,6 +29,6 @@ int main() {
 
     pop(&s);
 
-    printf("Is the Stack Empty? %d\n", isEmpty(s));
+    printf("Is the Stack Empty? %d\n", is_empty(s));
     return 0;
 }

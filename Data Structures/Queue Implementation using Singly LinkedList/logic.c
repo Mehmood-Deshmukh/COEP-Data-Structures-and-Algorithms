@@ -8,52 +8,53 @@ void init(Queue *q){
     q->tail = NULL;
 }
 
-void enQueue(Queue *q, int data){
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    if(!newNode) return;
+void enqueue(Queue *q, int data){
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    if(!new_node) return;
 
-    newNode->data = data;
-    newNode->next = NULL;
+    new_node->data = data;
+    new_node->next = NULL;
 
-    if(isEmpty(*q)){
-        q->head = newNode;
-        q->tail = newNode;
+    if(is_empty(*q)){
+        q->head = new_node;
+        q->tail = new_node;
+        return;
     }
 
-    q->tail->next = newNode;
-    q->tail = newNode;
+    q->tail->next = new_node;
+    q->tail = new_node;
 
 }
 
-int deQueue(Queue *q){
-    if(isEmpty(*q)) return INT_MIN;
-    Node *removedNode;
-    int removedElement;
+int dequeue(Queue *q){
+    if(is_empty(*q)) return INT_MIN;
+    Node *removed_node;
+    int removed_element;
 
-    removedNode = q->head;
-    removedElement = removedNode->data;
+    removed_node = q->head;
+    removed_element = removed_node->data;
 
     q->head = q->head->next;
     if(!q->head) q->tail = NULL;
 
-    free(removedNode);
-    return removedElement;
+    free(removed_node);
+    return removed_element;
 }
 
-int isEmpty(Queue q){
+int is_empty(Queue q){
     if(!q.head) return 1;
 
     return 0;
 }
 
 int peek(Queue q){
-    if(isEmpty(q)) return INT_MIN;
+    if(is_empty(q)) return INT_MIN;
 
     return q.head->data;
 }
 
 void display(Queue q){
-        if(isEmpty(q)){
+    if(is_empty(q)){
         printf("Queue is Empty!\n");
         return;
     }

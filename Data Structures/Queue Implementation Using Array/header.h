@@ -4,9 +4,9 @@ typedef struct Queue{
 } Queue;
 
 void init(Queue *q, int size);
-void enQueue(Queue *q, int data);
-int deQueue(Queue *q);
-int isEmpty(Queue q);
-int isFull(Queue q);
+void enqueue(Queue *q, int data);
+int dequeue(Queue *q);
+int is_empty(Queue q);
+int is_full(Queue q);
 int peek(Queue q);
 void display(Queue q);

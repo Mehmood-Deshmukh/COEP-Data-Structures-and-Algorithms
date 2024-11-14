@@ -4,9 +4,7 @@
 #include "./header.h"
 
 void init(Stack *s, int size){
-    if(size < 1){
-        return;
-    }
+    if(size < 1) return;
     s->size = size;
     s->top = 0;
     s->array = (int *) malloc(sizeof(int) * size);
@@ -14,41 +12,31 @@ void init(Stack *s, int size){
     return;
 }
 
-int isEmpty(Stack s){
-    if((s.top) == 0){
-        return 1;
-    }
+int is_empty(Stack s){
+    if(s.top == 0)  return 1;
 
     return 0;
 }
 
-int isFull(Stack s){
-    if((s.top) == (s.size)){
-        return 1;
-    }
+int is_full(Stack s){
+    if(s.top == s.size) return 1;
 
     return 0;
 }
 
 void push(Stack *s, int data){
-    if (isFull(*s)){
-        return;
-    }
+    if (is_full(*s)) return;
     s->array[s->top++] = data;
     return;
 }
 
 int peek(Stack s){
-    if (isEmpty(s)){
-        return INT_MIN;
-    }
+    if (is_empty(s)) return INT_MIN;
 
     return s.array[s.top - 1];    
 }
 int pop(Stack *s){
-    if (isEmpty(*s)){
-        return INT_MIN;
-    }
+    if (is_empty(*s)) return INT_MIN;
 
     return s->array[--(s->top)];
 }
@@ -64,4 +52,23 @@ void display(Stack s){
         printf("%d ", s.array[i]);
     }
     printf("\n");
+}
+
+void sort(Stack *s){
+    Stack temp;
+    init(&temp, s->size);
+
+    while(!is_empty(*s)){
+        int data = pop(s);
+
+        while(!is_empty(temp) && peek(temp) > data){
+            push(s, pop(&temp));
+        }
+
+        push(&temp, data);
+    }
+
+    while(!is_empty(temp)){
+        push(s, pop(&temp));
+    }
 }

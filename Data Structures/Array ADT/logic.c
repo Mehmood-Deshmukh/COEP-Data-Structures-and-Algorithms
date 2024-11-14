@@ -22,7 +22,7 @@ void insertAtIndex(Array *a, int element, int position){
     int length = a->len;
     if (length == a->size || position < 0 || position >= length) return;
 
-    for(int i = length; i >= position; i--){
+    for(int i = length; i > position; i--){
         a->A[i] = a->A[i - 1];
     }
 

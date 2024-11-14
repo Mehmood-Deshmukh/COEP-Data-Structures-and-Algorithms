@@ -9,5 +9,6 @@ void init(Stack *s);
 void push(Stack *s, int data);
 int pop(Stack *s);
 int peek(Stack s);
-int isEmpty(Stack s);
+int is_empty(Stack s);
 void display(Stack s);
+void sort(Stack *s);

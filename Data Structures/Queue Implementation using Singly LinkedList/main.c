@@ -1,27 +1,29 @@
-#include "./logic.c"
+#include "header.h"
+#include <stdlib.h> 
+#include <stdio.h>
 
 int main(){
     Queue q;
     init(&q);
 
     for (int i = 0; i < 10; i++){
-        enQueue(&q, rand() % 100 + 1);
+        enqueue(&q, rand() % 100 + 1);
     }
 
     display(q);
 
-    deQueue(&q);
-    deQueue(&q);
-    deQueue(&q);
-    deQueue(&q);
+    dequeue(&q);
+    dequeue(&q);
+    dequeue(&q);
+    dequeue(&q);
 
     display(q);
 
     printf("Let's take a peek: %d\n", peek(q));
 
-    enQueue(&q, 56);
+    enqueue(&q, 56);
     for (int i = 0; i < 7; i++){
-        enQueue(&q, rand() % 100 + 1);
+        enqueue(&q, rand() % 100 + 1);
     }
     display(q);
     

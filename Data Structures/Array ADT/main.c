@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "logic.c"
+#include <stdlib.h>
+#include "header.h"
 
 int main() {
     Array a1, a2, a3;

@@ -9,44 +9,44 @@ void init(Stack *s){
 }
 
 void push(Stack *s, int data){
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    if(!newNode) return;
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    if(!new_node) return;
 
-    newNode->data = data;
-    newNode->next = *s;
+    new_node->data = data;
+    new_node->next = *s;
 
-    *s = newNode;
+    *s = new_node;
     return;
 }
 
 int pop(Stack *s){
-    if(isEmpty(*s)) return INT_MIN;
+    if(is_empty(*s)) return INT_MIN;
 
-    Node *removedNode;
-    int removedElement;
+    Node *removed_node;
+    int removed_element;
 
-    removedNode = *s;
-    removedElement = removedNode->data;
+    removed_node = *s;
+    removed_element = removed_node->data;
     *s = (*s)->next;
 
-    free(removedNode);
-    return removedElement;
+    free(removed_node);
+    return removed_element;
 }
 
 int peek(Stack s){
-    if(isEmpty(s)) return INT_MIN;
+    if(is_empty(s)) return INT_MIN;
 
     return s->data;
 }
 
-int isEmpty(Stack s){
+int is_empty(Stack s){
     if(!s) return 1;
 
     return 0;
 }
 
 void display(Stack s){
-    if(isEmpty(s)){
+    if(is_empty(s)){
         printf("Stack is Empty!\n");
         return;
     }
@@ -59,5 +59,23 @@ void display(Stack s){
     }
 
     printf("\b\b \n");
+    return;
+}
+
+void sort(Stack *s){
+    Stack temp;
+    init(&temp);
+
+    while(!is_empty(*s)){
+        int data = pop(s);
+
+        while(!is_empty(temp) && peek(temp) > data){
+            push(s, pop(&temp));
+        }
+
+        push(&temp, data);
+    }
+
+    *s = temp;
     return;
 }

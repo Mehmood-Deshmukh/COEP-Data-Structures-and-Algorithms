@@ -1,9 +1,9 @@
-#include "header.h"
-#include <stdio.h>
+#include "logic.c"
+
 int main(){
     Stack s;
 
-    init(&s);
+    init_stack(&s);
 
     push(&s, 6);
     push(&s, 7);
@@ -12,21 +12,18 @@ int main(){
     push(&s, -2);
     push(&s, 1);
 
-    display(s);
+    display_stack(s);
 
     push(&s, -65);
     push(&s, 48);
 
-    display(s);
-    sort(&s);
-    printf("Sorted Stack: ");
-    display(s);
+    display_stack(s);
 
     pop(&s);
     pop(&s);
     pop(&s);
 
-    display(s);
+    display_stack(s);
 
     printf("Let's take a peek on to the stack: I saw %d\n", peek(s));
 
