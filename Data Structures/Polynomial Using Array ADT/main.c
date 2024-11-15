@@ -1,11 +1,13 @@
-#include "./logic.c"
+#include "header.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     Polynomial p1, p2, sum, difference, product;
     init(&p1, 4);
     init(&p2, 5);
-    getPolynomial(&p1, 4);
-    randomPolynomial(&p2, 5);
+    get_polynomial(&p1, 4);
+    random_polynomial(&p2, 5);
     printf("Polynomial 1: ");
     display(p1);
     printf("Polynomial 2: ");

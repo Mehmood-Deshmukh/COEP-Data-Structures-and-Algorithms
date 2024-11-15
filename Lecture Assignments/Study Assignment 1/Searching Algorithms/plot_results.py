@@ -33,6 +33,7 @@ for algo_dir in ['linear_search', 'binary_search']:
 
 df = pd.DataFrame(data).transpose()
 df = df.loc[test_cases_order]  
+print(df)
 
 
 plt.figure(figsize=(10, 6))

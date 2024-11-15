@@ -5,7 +5,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define INITIAL_SIZE 1024  
+#define INITIAL_SIZE 2 
 
 
 int binarySearch(int arr[], int size, int key) {
@@ -24,42 +24,52 @@ int binarySearch(int arr[], int size, int key) {
     return -1;
 }
 
-
-int main() {
-    int *arr = (int *)malloc(INITIAL_SIZE * sizeof(int));
-    if (arr == NULL) {
+void get_input(int **arr, int *index) {
+    if (!*arr) {
         perror("Failed to allocate memory");
-        return EXIT_FAILURE;
+        return;
     }
 
     int value;
     int capacity = INITIAL_SIZE;
-    int index = 0;
     
     while (scanf("%d", &value) != EOF) {
-        if (index >= capacity) {
+        printf("value: %d\n", value);
+        if (*index >= capacity) {
             capacity *= 2;
-            int *new_arr = (int *)realloc(arr, capacity * sizeof(int));
-            if (new_arr == NULL) {
+            int *new_arr = (int *)realloc(*arr, capacity * sizeof(int));
+            if (!new_arr) {
                 perror("Failed to allocate memory");
-                free(arr);
-                return EXIT_FAILURE;
+                free(*arr);
+                return;
             }
-            arr = new_arr;
+            *arr = new_arr;
         }
-        arr[index++] = value;
+        (*arr)[(*index)++] = value;
     }
+}
+
+int main() {
+    int *arr = (int *) malloc(INITIAL_SIZE * sizeof(int));
+    int index = 0;
+
+    get_input(&arr, &index);
 
     int arr_size = index;
-
     if (arr_size == 0) {
-        printf("No numbers provided.\n");
+        printf("No elements in the array\n");
         free(arr);
         return 0;
     }
 
-    srand(time(NULL)); // Seed the random number generator
-    int key = arr[rand() % arr_size]; // Random element from the array
+    printf("Array: ");
+    for (int i = 0; i < arr_size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    srand(time(NULL)); 
+    int key = arr[rand() % arr_size]; 
 
 
 

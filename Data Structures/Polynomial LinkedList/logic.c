@@ -4,7 +4,7 @@
 
 void init(Polynomial *p){
     p->head = NULL;
-    p->maxDegree = -1;
+    p->max_degree = -1;
 }
 
 void append(Polynomial *p, int coefficient, int degree){
@@ -22,23 +22,23 @@ void append(Polynomial *p, int coefficient, int degree){
         prev->coefficient += coefficient;
         return;
     }else{
-        Node *newNode = (Node *) malloc(sizeof(Node));
-        if(!newNode) return;
+        Node *new_node = (Node *) malloc(sizeof(Node));
+        if(!new_node) return;
 
-        newNode->coefficient = coefficient;
-        newNode->degree = degree;
-        newNode->next = NULL;
+        new_node->coefficient = coefficient;
+        new_node->degree = degree;
+        new_node->next = NULL;
         if(!prev){
-            newNode->next = p->head;
-            p->head = newNode;
+            new_node->next = p->head;
+            p->head = new_node;
         }else{
-            newNode->next = prev->next;
-            prev->next = newNode;
+            new_node->next = prev->next;
+            prev->next = new_node;
         }
     }
 
-    if (degree > p->maxDegree) {
-        p->maxDegree = degree;
+    if (degree > p->max_degree) {
+        p->max_degree = degree;
     }
 }
 
@@ -66,9 +66,9 @@ void display(Polynomial p){
 
     printf("\b\b \n");
 }
-void getPolynomial(Polynomial *p, int maxDegree){
+void get_polynomial(Polynomial *p, int max_degree){
     int coefficient;
-    for(int i = maxDegree; i >= 0; i--){
+    for(int i = max_degree; i >= 0; i--){
         printf("Enter Coefficeient of x^(%d)\n", i);
         scanf("%d", &coefficient);
         append(p, coefficient, i);
@@ -76,9 +76,9 @@ void getPolynomial(Polynomial *p, int maxDegree){
 
     return;
 }
-void randomPolynomial(Polynomial *p, int maxDegree){
+void random_polynomial(Polynomial *p, int max_degree){
     int coefficient;
-    for(int i = maxDegree; i >= 0; i--){
+    for(int i = max_degree; i >= 0; i--){
         coefficient = rand() % 201 - 100;
         append(p, coefficient, i);
     }

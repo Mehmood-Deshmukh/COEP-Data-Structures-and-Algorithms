@@ -221,7 +221,7 @@ Edge *minimum_spanning_tree(Graph graph, int start_vertex){
     free(visited);
     printf("Total weight of the minimum spanning tree is %d when started from %d\n", total_weight, start_vertex);
     return edges;
-}
+} 
 
 
 void free_graph(Graph *graph) {
