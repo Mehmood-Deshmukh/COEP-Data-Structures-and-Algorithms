@@ -1,11 +1,13 @@
 typedef struct Graph{
     int vertices;
+    int edges;
     int **adjacency_matrix;
 } Graph;
 
 typedef struct Edge{
     int start_vertex;
     int end_vertex;
+    int weight;
 } Edge;
 
 void init(Graph *graph, int vertices);
@@ -20,7 +22,10 @@ void breadth_first_search(Graph graph, int start_vertex);
 void depth_first_search(Graph graph, int start_vertex);
 
 void iterative_depth_first_search(Graph graph, int start_vertex);
-Edge *minimum_spanning_tree(Graph graph, int start_vertex);
+Edge *minimum_spanning_tree_prims_algorithm(Graph graph, int start_vertex);
+Edge *minimum_spanning_tree_kruskals_algorithm(Graph graph);
+
+Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vertex);
 
 int detect_cycle(Graph graph);
 

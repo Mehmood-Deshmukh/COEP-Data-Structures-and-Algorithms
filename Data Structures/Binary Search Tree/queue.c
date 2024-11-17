@@ -1,36 +1,36 @@
 #include "./queue.h"
 
-void qInit(Queue *q){
+void init_queue(Queue *q){
     q->front = q->rear = NULL;
     return;  
 }
 
 void enqueue(Queue *q, Node *data){
-    Qnode *newNode = (Qnode *)malloc(sizeof(Qnode));
-    if(!newNode) return;
+    QueueNode *new_node = (QueueNode *)malloc(sizeof(QueueNode));
+    if(!new_node) return;
 
-    newNode->data = data;
-    newNode->next = NULL;
+    new_node->data = data;
+    new_node->next = NULL;
 
     if(!q->front){
-        q->front = q->rear = newNode;
+        q->front = q->rear = new_node;
         return;
     }
 
-    q->rear->next = newNode;
-    q->rear = newNode;
+    q->rear->next = new_node;
+    q->rear = new_node;
 
     return;
 }
 
 Node *dequeue(Queue *q){
-    if(isEmptyQueue(*q)) return NULL;
+    if(is_empty_queue(*q)) return NULL;
 
-    Qnode *removedNode;
-    Node *removedElement;
+    QueueNode *removed_node;
+    Node *removed_element;
 
-    removedNode = q->front;
-    removedElement = removedNode->data;
+    removed_node = q->front;
+    removed_element = removed_node->data;
 
     if(q->front == q->rear){
         q->front = q->rear = NULL;
@@ -38,26 +38,26 @@ Node *dequeue(Queue *q){
         q->front = q->front->next;
     }
 
-    free(removedNode);
-    return removedElement;
+    free(removed_node);
+    return removed_element;
 }
 
-Node *qPeek(Queue q){
-    if(isEmptyQueue(q)) return NULL;
+Node *peek_queue(Queue q){
+    if(is_empty_queue(q)) return NULL;
 
     return q.front->data;
 }
 
-int isEmptyQueue(Queue q){
+int is_empty_queue(Queue q){
     if(!q.front) return 1;
 
     return 0;
 }
 
-int getQueueSize(Queue q){
+int get_queue_size(Queue q){
     int count = 0;
 
-    Qnode *temp = q.front;
+    QueueNode *temp = q.front;
     while(temp){
         count++;
         temp = temp->next;

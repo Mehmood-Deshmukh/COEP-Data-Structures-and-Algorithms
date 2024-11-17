@@ -2,6 +2,23 @@
 Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the
 list is repeated until the list is sorted. The algorithm, which is a comparison sort, is named for the way smaller elements "bubble" to the top of the list. Although the algorithm is simple, it is too slow and impractical for most problems even when compared to insertion sort. It can be practical if the input is usually in sorted order but may occasionally have some out-of-order elements nearly in position.
 
+### Implementation
+```c
+void bubble_sort(int arr[], int n){
+    int i, j;
+    for(i = 0; i < n; i++){
+        int swapped = 0;
+        for(j = 0; j < n - 1 - i; j++){
+            if(arr[j] > arr[j + 1]){
+                swap(&arr[j], &arr[j + 1]);
+                swapped = 1;
+            }
+        }
+        if(!swapped) break;
+    }
+}
+```
+
 ## Time Complexity
 - Best Case: O(n) : When the list is already sorted.
 - Average Case: O(n^2) : When the list is in random order.
@@ -27,6 +44,20 @@ Bubble sort is one of the slowest sorting algorithms, with a time complexity of 
 
 # Selection Sort
 Selection sort is an in-place comparison sorting algorithm that divides the input list into two parts: the sublist of items already sorted and the sublist of items remaining to be sorted. The algorithm selects the smallest element from the unsorted sublist and swaps it with the leftmost unsorted element. The selection sort algorithm is simple and easy to implement, but it is inefficient on large lists and generally performs worse than insertion sort.
+
+### Implementation
+```c
+void selection_sort(int arr[], int n){
+    int i, j, min;
+    for(i = 0; i < n; i++){
+        min = i;
+        for(j = i+1; j < n; j++){
+            if(arr[j] < arr[min]) min = j;
+        }
+        swap(&arr[min], &arr[i]);
+    }
+}
+```
 
 ## Time Complexity
 - Best Case: O(n^2) : When the list is in reverse order.
@@ -54,6 +85,22 @@ Selection sort is another slow sorting algorithm with a time complexity of O(n^2
 
 Insertion sort is a simple sorting algorithm that builds the final sorted list one item at a time. It iterates through the list, removing one element at a time and finding the correct position to insert it in the sorted part of the list. The algorithm is efficient for small data sets and is more efficient than bubble sort and selection sort.
 
+### Implementation
+```c
+void insertion_sort(int arr[], int n){
+    int i, j;
+    for(i = 1; i < n; i++){
+        int key = arr[i];
+        j = i - 1;
+        while(j >= 0 && arr[j] > key){
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+```
+
 ## Time Complexity
 - Best Case: O(n) : When the list is already sorted.
 - Average Case: O(n^2) : When the list is in random order.
@@ -79,6 +126,30 @@ Insertion sort is more efficient than bubble sort and selection sort, with a tim
 # Quick Sort
 Quick sort is a comparison-based sorting algorithm that uses a divide-and-conquer strategy to sort the elements. It picks an element as a pivot and partitions the array around the pivot, such that all elements smaller than the pivot are on the left, and all elements larger than the pivot are on the right. The algorithm then recursively sorts the subarrays on the left and right of the pivot. Quick sort is efficient and widely used due to its average-case time complexity of O(n log n).
 
+### Implementation
+
+```c
+void partition(int arr[], int n, int *pivot){
+    int i = 0, j = n - 1;
+    int p = arr[0];
+    while(i < j){
+        while(arr[i] <= p) i++;
+        while(arr[j] > p) j--;
+        if(i < j) swap(&arr[i], &arr[j]);
+    }
+    swap(&arr[0], &arr[j]);
+    *pivot = j;
+}
+
+void quick_sort(int arr[], int n){
+    if(n <= 1) return;
+    int pivot;
+    partition(arr, n, &pivot);
+    quick_sort(arr, pivot);
+    quick_sort(arr + pivot + 1, n - pivot - 1);
+}
+```
+
 ## Time Complexity
 - Best Case: O(n log n) : When the pivot divides the array into two equal parts.
 - Average Case: O(n log n) : When the pivot divides the array into two parts of nearly equal size.
@@ -103,6 +174,26 @@ Quick sort is one of the most efficient sorting algorithms with an average-case 
 
 # Heapsort
 Heapsort is a comparison-based sorting algorithm that uses a binary heap data structure to sort the elements. It builds a max heap from the input array and repeatedly extracts the maximum element from the heap and places it at the end of the array. The algorithm then reduces the heap size and maintains the heap property to sort the remaining elements. Heapsort has a time complexity of O(n log n) and is an efficient sorting algorithm.
+
+### Implementation
+```c
+void heap_sort_max_heap(int *array, int size){
+    max_heap h;
+    init_max_heap(&h);
+
+    for(int i = 0; i < size; i++){
+        insert_max_heap(&h, array[i]);
+    }
+
+    for(int i = size - 1; i >= 0; i--){
+        array[i] = remove_max_heap(&h);
+    }
+
+    free_max_heap(&h);
+
+    return;
+}
+```
 
 ## Time Complexity
 - Best Case: O(n log n) : When the input array is already a heap.

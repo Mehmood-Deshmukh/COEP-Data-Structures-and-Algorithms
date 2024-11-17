@@ -3,18 +3,18 @@
 
 #include "header.h"
 
-typedef struct Snode {
+typedef struct StackNode {
     Node *data;
-    struct Snode *next;
-} Snode;
+    struct StackNode *next;
+} StackNode;
 
-typedef Snode *Stack;
+typedef StackNode *Stack;
 
-void sInit(Stack *s);
+void init_stack(Stack *s);
 void push(Stack *s, Node *data);
 Node *pop(Stack *s);
 Node *peek(Stack s);
-int isEmpty(Stack s);
-int getSize(Stack s);
+int is_empty_stack(Stack s);
+int get_stack_size(Stack s);
 
 #endif // STACK_H

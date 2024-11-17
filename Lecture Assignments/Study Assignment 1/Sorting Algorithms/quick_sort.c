@@ -30,11 +30,11 @@ void swap(int *a, int *b){
 }
 
 void partition(int arr[], int n, int *pivot){
-    int i = 0, j = n - 1;
+    int i = 1, j = n - 1;
     int p = arr[0];
-    while(i < j){
-        while(arr[i] <= p) i++;
-        while(arr[j] > p) j--;
+    while(i <= j){
+        while(i < n && arr[i] <= p) i++;
+        while(j > 0 && arr[j] > p) j--;
         if(i < j) swap(&arr[i], &arr[j]);
     }
     swap(&arr[0], &arr[j]);

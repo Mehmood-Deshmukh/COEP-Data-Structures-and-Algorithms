@@ -3,21 +3,21 @@
 
 #include "header.h"
 
-typedef struct Qnode {
+typedef struct QueueNode {
     Node *data;
-    struct Qnode *next;
-} Qnode;
+    struct QueueNode *next;
+} QueueNode;
 
 typedef struct{
-    Qnode *front;
-    Qnode *rear;
+    QueueNode *front;
+    QueueNode *rear;
 } Queue;
 
-void qInit(Queue *q);
+void init_queue(Queue *q);
 void enqueue(Queue *q, Node *data);
 Node *dequeue(Queue *q);
-Node *qPeek(Queue q);
-int isEmptyQueue(Queue q);
-int getQueueSize(Queue q);
+Node *peek_queue(Queue q);
+int is_empty_queue(Queue q);
+int get_queue_size(Queue q);
 
 #endif // QUEUE_H

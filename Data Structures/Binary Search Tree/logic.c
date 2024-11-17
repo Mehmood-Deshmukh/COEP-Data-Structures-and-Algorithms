@@ -31,31 +31,32 @@ Node *iterative_search(BST root, int key){
 void iterative_insert(BST *root, int data){
     Node *temp = *root;
 
-    Node *newNode = (Node *) malloc(sizeof(Node));
-    if(!newNode) return;
-    newNode->data = data;
-    newNode->left = newNode->right = NULL;
+    Node *new_node = (Node *) malloc(sizeof(Node));
+    if(!new_node) return;
+
+    new_node->data = data;
+    new_node->left = new_node->right = NULL;
 
     if(!temp){
-        *root = newNode;
+        *root = new_node;
         return; 
     }
     
     while(temp){
         if(temp->data == data){
-            free(newNode);
+            free(new_node);
             return;
         }
 
         if(data < temp->data){
             if(!temp->left){
-                temp->left = newNode;
+                temp->left = new_node;
                 return;
             }
             temp = temp->left;
         }else{
             if(!temp->right){
-                temp->right = newNode;
+                temp->right = new_node;
                 return;
             }
             temp = temp->right;
@@ -66,12 +67,12 @@ void iterative_insert(BST *root, int data){
 void recursive_insert(BST *root, int data){
     Node *temp = *root;
     if(!temp){
-        Node *newNode = (Node *) malloc(sizeof(Node));
-        if(!newNode) return;
+        Node *new_node = (Node *) malloc(sizeof(Node));
+        if(!new_node) return;
 
-        newNode->data = data;
-        newNode->left = newNode->right = NULL;
-        *root = newNode;
+        new_node->data = data;
+        new_node->left = new_node->right = NULL;
+        *root = new_node;
         return;
     }
 
@@ -197,10 +198,10 @@ void iterative_destroy_tree(BST *root){
     if(!*root) return;
 
     Stack s;
-    sInit(&s);
+    init_stack(&s);
     push(&s, *root);
 
-    while(!isEmpty(s)){
+    while(!is_empty_stack(s)){
         Node *temp = pop(&s);
         if(temp->left) push(&s, temp->left);
         if(temp->right) push(&s, temp->right);
@@ -223,14 +224,14 @@ int iterative_get_height(BST root){
     if(!root) return 0;
 
     Queue q;
-    qInit(&q);
+    init_queue(&q);
     enqueue(&q, root);
 
     int height = 0;
-    while(!isEmptyQueue(q)){
-        int nodeCount = getQueueSize(q);
+    while(!is_empty_queue(q)){
+        int node_count = get_queue_size(q);
         height++;
-        for(int i = 0; i < nodeCount; i++){
+        for(int i = 0; i < node_count; i++){
             Node *temp = dequeue(&q);
             if(temp->left) enqueue(&q, temp->left);
             if(temp->right) enqueue(&q, temp->right);
@@ -252,14 +253,14 @@ void recursive_inorder_traversal(BST root){
 
 void iterative_inorder_traversal(BST root){
     Stack s;
-    sInit(&s);
+    init_stack(&s);
     Node *temp = root;
     while(1){
         if(temp){
             push(&s, temp);
             temp = temp->left;
         }else{
-            if(isEmpty(s)) break;
+            if(is_empty_stack(s)) break;
             Node *node = pop(&s);
             printf("%d ", node->data);
             temp = node->right;
@@ -281,10 +282,10 @@ void iterative_preorder_traversal(BST root){
     if(!root) return;
 
     Stack s;
-    sInit(&s);
+    init_stack(&s);
     push(&s, root);
 
-    while(!isEmpty(s)){
+    while(!is_empty_stack(s)){
         Node *temp = pop(&s);
         printf("%d ", temp->data);
         if(temp->right) push(&s, temp->right);
@@ -307,11 +308,11 @@ void iterative_postorder_traversal(BST root){
     if(!root) return;
 
     Stack s1, s2;
-    sInit(&s1);
-    sInit(&s2);
+    init_stack(&s1);
+    init_stack(&s2);
 
     push(&s1, root);
-    while(!isEmpty(s1)){
+    while(!is_empty_stack(s1)){
         Node *temp = pop(&s1);
         push(&s2, temp);
 
@@ -319,7 +320,7 @@ void iterative_postorder_traversal(BST root){
         if(temp->right) push(&s1, temp->right);
     }
 
-    while(!isEmpty(s2)){
+    while(!is_empty_stack(s2)){
         Node *temp = pop(&s2);
         printf("%d ", temp->data);
     }
@@ -330,12 +331,12 @@ void level_order_traversal(BST root){
     if(!root) return;
 
     Queue q;
-    qInit(&q);
+    init_queue(&q);
     enqueue(&q, root);
 
-    while(!isEmptyQueue(q)){
-        int nodeCount = getQueueSize(q);
-        for(int i = 0; i < nodeCount; i++){
+    while(!is_empty_queue(q)){
+        int node_count = get_queue_size(q);
+        for(int i = 0; i < node_count; i++){
             Node *temp = dequeue(&q);
             printf("%d ", temp->data);
             if(temp->left) enqueue(&q, temp->left);
@@ -352,14 +353,14 @@ int iterative_count_leaf(BST root){
     if(!root) return 0;
     
     Queue q;
-    qInit(&q);
+    init_queue(&q);
 
     enqueue(&q, root);
     int count = 0;
 
-    while(!isEmptyQueue(q)){
-        int nodeCount = getQueueSize(q);
-        for(int i = 0; i < nodeCount; i++){
+    while(!is_empty_queue(q)){
+        int node_count = get_queue_size(q);
+        for(int i = 0; i < node_count; i++){
             Node *temp = dequeue(&q);
             if(!temp->left && !temp->right) count++;
             if(temp->left) enqueue(&q, temp->left);
@@ -383,14 +384,14 @@ int iterative_count_non_leaf(BST root){
     if(!root) return 0;
 
     Queue q;
-    qInit(&q);
+    init_queue(&q);
 
     enqueue(&q, root);
 
     int count = 0;
-    while(!isEmptyQueue(q)){
-        int nodeCount = getQueueSize(q);
-        for(int i = 0; i < nodeCount; i++){
+    while(!is_empty_queue(q)){
+        int node_count = get_queue_size(q);
+        for(int i = 0; i < node_count; i++){
             Node *temp = dequeue(&q);
             if(temp->left || temp->right) count++;
             if(temp->left) enqueue(&q, temp->left);

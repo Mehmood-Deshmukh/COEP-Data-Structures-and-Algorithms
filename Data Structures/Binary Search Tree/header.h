@@ -17,6 +17,7 @@ typedef struct Node *BST;
 void init(BST *root);
 Node *iterative_search(BST root, int key);
 Node *recursive_search(BST root, int key);
+
 void iterative_insert(BST *root, int data);
 void recursive_insert(BST *root, int data);
 

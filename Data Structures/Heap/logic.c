@@ -1,4 +1,7 @@
 #include "header.h"
+#include <limits.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 void init_max_heap(max_heap *h){
     h->array = (int *) malloc(sizeof(int) * MAX_SIZE);
@@ -27,7 +30,6 @@ void handle_is_full_max_heap(max_heap *h){
         h->size = h->size * 2;
 
     }
-    
 
     return;
 }
@@ -140,9 +142,7 @@ void heapify_min_heap(min_heap *h){
 }
 
 int remove_max_heap(max_heap *h){
-    if(is_empty_max_heap(*h)){
-        return INT_MIN;
-    }
+    if(is_empty_max_heap(*h)) return INT_MIN;
 
     int data = h->array[0];
     h->array[0] = h->array[h->rear--];
@@ -152,9 +152,7 @@ int remove_max_heap(max_heap *h){
 }
 
 int remove_min_heap(min_heap *h){
-    if(is_empty_min_heap(*h)){
-        return INT_MAX;
-    }
+    if(is_empty_min_heap(*h)) return INT_MAX;
 
     int data = h->array[0];
     h->array[0] = h->array[h->rear--];

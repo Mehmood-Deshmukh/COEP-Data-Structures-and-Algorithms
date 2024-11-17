@@ -1,8 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<limits.h>
-#include<errno.h>
-
 #define MAX_SIZE 10
 
 typedef struct max_heap{
@@ -18,6 +13,7 @@ typedef struct min_heap{
 } min_heap;
 
 void init_max_heap(max_heap *h);
+
 void init_min_heap(min_heap *h);
 
 int is_empty_max_heap(max_heap h);

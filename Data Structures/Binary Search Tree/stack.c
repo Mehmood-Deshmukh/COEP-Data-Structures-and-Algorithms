@@ -1,48 +1,48 @@
 #include "./stack.h"
 
-void sInit(Stack *s){
+void init_stack(Stack *s){
     *s = NULL; 
     return;  
 }
 
 void push(Stack *s, Node *data){
-    Snode *newNode = (Snode *)malloc(sizeof(Snode));
-    if(!newNode) return;
+    StackNode *new_node = (StackNode *)malloc(sizeof(StackNode));
+    if(!new_node) return;
 
-    newNode->data = data;
-    newNode->next = *s;
+    new_node->data = data;
+    new_node->next = *s;
 
-    *s = newNode;
+    *s = new_node;
     return;
 }
 
 Node *pop(Stack *s){
-    if(isEmpty(*s)) return NULL;
+    if(is_empty_stack(*s)) return NULL;
 
-    Snode *removedNode;
-    Node *removedElement;
+    StackNode *removed_node;
+    Node *removed_element;
 
-    removedNode = *s;
-    removedElement = removedNode->data;
+    removed_node = *s;
+    removed_element = removed_node->data;
     *s = (*s)->next;
 
-    free(removedNode);
-    return removedElement;
+    free(removed_node);
+    return removed_element;
 }
 
 Node *peek(Stack s){
-    if(isEmpty(s)) return NULL;
+    if(is_empty_stack(s)) return NULL;
 
     return s->data;
 }
 
-int isEmpty(Stack s){
+int is_empty_stack(Stack s){
     if(!s) return 1;
 
     return 0;
 }
 
-int getSize(Stack s){
+int get_stack_size(Stack s){
     int count = 0;
     while(s){
         count++;
