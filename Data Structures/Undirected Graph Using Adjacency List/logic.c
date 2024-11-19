@@ -207,6 +207,8 @@ int detect_cycle(Graph graph){
     int *visited = (int *)calloc(vertices, sizeof(int));
     int *parent = (int *)calloc(vertices, sizeof(int));
 
+    for(int i = 0; i < vertices; i++) parent[i] = -1;
+
     Stack stack;
     init_stack(&stack);
 
@@ -216,12 +218,7 @@ int detect_cycle(Graph graph){
             parent[i] = -1;
             while(!is_empty_stack(stack)){
                 int current_vertex = pop(&stack);
-                if(visited[current_vertex]){
-                    free(visited);
-                    free(parent);
-                    return 1;
-                }
-                visited[current_vertex] = 1;
+                if(!visited[current_vertex]) visited[current_vertex] = 1;
 
                 Node *temp = graph.adjacency_list[current_vertex];
                 while(temp){
@@ -229,6 +226,8 @@ int detect_cycle(Graph graph){
                         push(&stack, temp->vertex);
                         parent[temp->vertex] = current_vertex;
                     }else if(parent[current_vertex] != temp->vertex){
+                        free(visited);
+                        free(parent);
                         return 1;
                     }
                     temp = temp->next;

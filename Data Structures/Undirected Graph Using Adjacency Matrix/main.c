@@ -38,6 +38,19 @@ int main(int argc, char *argv[]){
         free(mst);
     } 
 
+    /* ascii art seperation */
+
+    printf("--------------------------------\n");
+
+    for(int i = 0; i < g.vertices; i++){
+        Edge *mst = minimum_spanning_tree_prims_algorithm_using_min_heap(&g, i);
+        for(int j = 0; j < g.vertices - 1; j++){
+            printf("%d-%d ", mst[j].start_vertex, mst[j].end_vertex);
+        }
+        printf("\n");
+        free(mst);
+    }
+
     Edge *mst = minimum_spanning_tree_kruskals_algorithm(g);
     for(int i = 0; i < g.vertices - 1; i++){
         printf("%d-%d ", mst[i].start_vertex, mst[i].end_vertex);

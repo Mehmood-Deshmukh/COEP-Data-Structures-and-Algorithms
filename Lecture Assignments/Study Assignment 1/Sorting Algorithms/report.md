@@ -28,15 +28,16 @@ void bubble_sort(int arr[], int n){
 
 | Data Set Size | Time (ms) |
 |---------------|-----------|
-| 100           | 2.562486  |
-| 200           | 3.856803  |
-| 500           | 3.774940  |
-| 1000          | 7.764609  |
-| 2000          | 16.781381 |
-| 5000          | 37.272564 |
-| 10000         | 61.085738 |
-| 20000         | 184.295726|
-| 50000         | 1106.673971|
+| 100           | 3.069218  |
+| 200           | 2.520787  |
+| 500           | 5.269694  |
+| 1000          | 6.446332  |
+| 2000          | 17.133653 |
+| 5000          | 53.386605 |
+| 10000         | 143.240873|
+| 20000         | 690.219696|
+| 50000         | 4926.238435|
+
 
 
 ### Insights
@@ -68,15 +69,15 @@ void selection_sort(int arr[], int n){
 
 | Data Set Size | Time (ms) |
 |---------------|-----------|
-| 100           | 3.069218  |
-| 200           | 2.520787  |
-| 500           | 5.269694  |
-| 1000          | 6.446332  |
-| 2000          | 17.133653 |
-| 5000          | 53.386605 |
-| 10000         | 143.240873|
-| 20000         | 690.219696|
-| 50000         | 4926.238435|
+| 100           | 2.562486  |
+| 200           | 3.856803  |
+| 500           | 3.774940  |
+| 1000          | 7.764609  |
+| 2000          | 16.781381 |
+| 5000          | 37.272564 |
+| 10000         | 61.085738 |
+| 20000         | 184.295726|
+| 50000         | 1106.673971|
 
 ### Insights
 Selection sort is another slow sorting algorithm with a time complexity of O(n^2) in all cases. It is not suitable for large data sets due to its poor performance. The algorithm performs better on nearly sorted data compared to random or reverse-sorted data.
@@ -242,6 +243,3 @@ Insertion sort is more efficient than quick sort for small data sets and nearly 
 **3. Why is heapsort often preferred in systems where memory allocation is a concern?**
 
 Heapsort is often preferred in systems where memory allocation is a concern because it is an in-place sorting algorithm that does not require additional memory beyond the input array. Heapsort builds a binary heap from the input array and sorts the elements in place, making it memory-efficient compared to other sorting algorithms like quick sort that require additional memory for recursive calls and stack space. Heapsort's in-place sorting nature makes it suitable for systems with limited memory resources or strict memory constraints.
-
-
-

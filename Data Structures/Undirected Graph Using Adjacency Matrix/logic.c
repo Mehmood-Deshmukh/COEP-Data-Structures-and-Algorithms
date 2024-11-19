@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include "./Queue Implementation using Singly LinkedList/header.h"
 #include "./Stack Implementation Using Singly LinkedList/header.h" 
+#include "./Heap/header.h"
 
 void init(Graph *graph, int vertices){
     graph->vertices = vertices;
-
+    graph->edges = 0;
     graph->adjacency_matrix = (int **)malloc(vertices * sizeof(int *));
     for(int i = 0; i < vertices; i++){
         graph->adjacency_matrix[i] = (int *)calloc(vertices, sizeof(int));
@@ -25,6 +26,7 @@ void add_edge(Graph *graph, int source, int destination, int weight){
 void remove_edge(Graph *graph, int source, int destination){
     graph->adjacency_matrix[source][destination] = 0;
     graph->adjacency_matrix[destination][source] = 0;
+    graph->edges--;
 }
 
 void print_adjacency_matrix(Graph graph){
@@ -153,6 +155,11 @@ int detect_cycle(Graph graph){
     int vertices = graph.vertices;
     int *visited = (int *)calloc(vertices, sizeof(int));
     int *parent = (int *) calloc(vertices, sizeof(int));
+
+    for(int i = 0; i < vertices; i++){
+        parent[i] = -1;
+    }
+
     Stack stack;
 
     for(int start_vertex = 0; start_vertex < vertices; start_vertex++){
@@ -165,7 +172,7 @@ int detect_cycle(Graph graph){
                 int current_vertex = pop(&stack);
                 if(!visited[current_vertex]) visited[current_vertex] = 1;
 
-                for(int i = vertices - 1; i >= 0; i--){
+                for(int i = 0; i < vertices; i++){
                     if(graph.adjacency_matrix[current_vertex][i] && !visited[i]){
                         push(&stack, i);
                         parent[i] = current_vertex;
@@ -223,7 +230,54 @@ Edge *minimum_spanning_tree_prims_algorithm(Graph graph, int start_vertex){
     free(visited);
     printf("Total weight of the minimum spanning tree is %d when started from %d\n", total_weight, start_vertex);
     return edges;
-}                        
+}      
+
+Edge *minimum_spanning_tree_prims_algorithm_using_min_heap(Graph *g, int start_vertex){
+    int vertices = g->vertices;
+    int *visited = (int *)calloc(vertices, sizeof(int));
+    MinHeap min_heap;
+    init_min_heap(&min_heap, vertices * vertices);
+
+    Edge *edges = (Edge *)malloc((vertices - 1) * sizeof(Edge));
+    int edge_count = 0, total_weight = 0;
+
+    visited[start_vertex] = 1;
+    for(int i = 0; i < vertices; i++){
+        if(g->adjacency_matrix[start_vertex][i]){
+            Edge edge;
+            edge.start_vertex = start_vertex;
+            edge.end_vertex = i;
+            edge.weight = g->adjacency_matrix[start_vertex][i];
+            insert_min_heap(&min_heap, edge);
+        }
+    }
+
+    while(!is_empty_min_heap(min_heap)){
+        Edge edge = remove_min_heap(&min_heap);
+        if(visited[edge.end_vertex]) continue;
+
+        visited[edge.end_vertex] = 1;
+        edges[edge_count++] = edge;
+        total_weight += edge.weight;
+
+        for(int i = 0; i < vertices; i++){
+            if(g->adjacency_matrix[edge.end_vertex][i] && !visited[i]){
+                Edge new_edge;
+                new_edge.start_vertex = edge.end_vertex;
+                new_edge.end_vertex = i;
+                new_edge.weight = g->adjacency_matrix[edge.end_vertex][i];
+                insert_min_heap(&min_heap, new_edge);
+            }
+        }
+    }
+
+    free(visited);
+    free(min_heap.edges);
+    printf("Total weight of the minimum spanning tree is %d when started from %d\n", total_weight, start_vertex);
+    return edges;
+}
+
+
 
 void swap_edges(Edge *edge1, Edge *edge2){
     Edge temp = *edge1;
@@ -333,6 +387,20 @@ Edge *minimum_spanning_tree_kruskals_algorithm(Graph graph){
     return mst;
 }
 
+int get_minimum_edge_dijkstras_algrithm(int *visited, int *distance, int vertices){
+    int min_distance = INT_MAX;
+    int min_vertex = -1;
+
+    for(int i = 0; i < vertices; i++){
+        if(!visited[i] && distance[i] < min_distance){
+            min_distance = distance[i];
+            min_vertex = i;
+        }
+    }
+
+    return min_vertex;
+}
+
 Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vertex){
     int vertices = graph.vertices;
     int *visited = (int *)calloc(vertices, sizeof(int));
@@ -348,15 +416,7 @@ Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vert
 
 
     for(int i = 0; i < vertices; i++){
-        int min_distance = INT_MAX;
-        int current_vertex = -1;
-
-        for(int j = 0; j < vertices; j++){
-            if(!visited[j] && distance[j] < min_distance){
-                min_distance = distance[j];
-                current_vertex = j;
-            }
-        }
+        int current_vertex = get_minimum_edge_dijkstras_algrithm(visited, distance, vertices);
 
         if(current_vertex == -1) break;
 
