@@ -78,12 +78,26 @@ int main(){
     if(temp) printf("Iterative Search: %d\n", temp->data);
     else printf("Iterative Search: Not Found\n");
 
-    printf("Iterative Delete Node: ");
+    printf("Iterative Delete Node: \n");
     iterative_delete_node(&root2, 30);
     iterative_delete_node(&root2, 100);
 
     printf("Iterative Inorder Traversal: ");
     iterative_inorder_traversal(root2);
+
+    printf("longest path from root to farthest leaf: ");
+    print_longest_path_from_root_to_leaf(root2);
+
+    printf("\n");
+
+    printf("Convert BST to Min Heap: ");
+    convert_bst_to_min_heap(&root2);
+    level_order_traversal(root2);
+    iterative_inorder_traversal(root2);
+
+    printf("Printing the leaf nodes in ascending order: ");
+    print_leaf_nodes_in_ascending_order(root2);
+    printf("\n");
 
     iterative_destroy_tree(&root2);
 

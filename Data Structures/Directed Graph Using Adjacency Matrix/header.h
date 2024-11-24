@@ -26,13 +26,17 @@ void breadth_first_search(Graph graph, int start_vertex);
 void depth_first_search(Graph graph, int start_vertex);
 
 void iterative_depth_first_search(Graph graph, int start_vertex);
+
 Edge *minimum_spanning_tree_prims_algorithm(Graph graph, int start_vertex);
-Edge *minimum_spanning_tree_prims_algorithm_using_min_heap(Graph *g, int start_vertex);
+Edge *minimum_spanning_tree_prims_algorithm_using_min_heap(Graph graph, int start_vertex);
+
 Edge *minimum_spanning_tree_kruskals_algorithm(Graph graph);
 
 Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vertex);
 
-int detect_cycle(Graph graph);
+int detect_cycle_depth_first_search(Graph graph);
+int detect_cycle_iterative_depth_first_search(Graph graph);
+int detect_cycle_breadth_first_search(Graph graph);
 
 void free_graph(Graph *graph);
 

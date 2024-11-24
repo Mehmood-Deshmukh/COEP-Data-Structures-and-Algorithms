@@ -18,9 +18,9 @@ void append(Array *a, int element){
     return;
 }
 
-void insertAtIndex(Array *a, int element, int position){
+void insert_at_index(Array *a, int element, int position){
     int length = a->len;
-    if (length == a->size || position < 0 || position >= length) return;
+    if (length == a->size || position < 0 || position > length) return;
 
     for(int i = length; i > position; i--){
         a->A[i] = a->A[i - 1];
@@ -31,7 +31,7 @@ void insertAtIndex(Array *a, int element, int position){
     return;
 }
 
-int removeAtIndex(Array *a, int position){
+int remove_at_index(Array *a, int position){
     int length = a->len;
     if (position < 0 || position >= length) return INT_MIN;
 
@@ -67,6 +67,7 @@ int max(Array a){
     }
     return maxElement; 
 }
+
 int min(Array a){
     if(a.len == 0) return INT_MAX;
     int minElement = a.A[0], length = a.len;

@@ -13,6 +13,8 @@ void init_min_heap(MinHeap *min_heap, int capacity);
 void insert_min_heap(MinHeap *min_heap, Edge edge);
 Edge remove_min_heap(MinHeap *min_heap);
 int is_empty_min_heap(MinHeap min_heap);
-void heapify(MinHeap *min_heap, int index);
+void heapify_min_heap(MinHeap *min_heap, int index);
+void free_min_heap(MinHeap *min_heap);
+
 
 #endif

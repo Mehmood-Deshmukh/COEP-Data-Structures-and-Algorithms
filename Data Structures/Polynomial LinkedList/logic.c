@@ -116,8 +116,6 @@ Polynomial add(Polynomial a, Polynomial b){
         temp2 = temp2->next;
     }
 
-    
-
     return *result;
 }
 Polynomial substract(Polynomial a, Polynomial b){
@@ -154,7 +152,7 @@ Polynomial substract(Polynomial a, Polynomial b){
 }
 Polynomial multiply(Polynomial a, Polynomial b){
     Node *temp1 = a.head;
-    Node *temp2 = b.head;
+    Node *temp2;
     Polynomial *result = (Polynomial *)malloc(sizeof(Polynomial));
     init(result);    
 

@@ -3,10 +3,11 @@
 #include<stdlib.h>
 #include<ctype.h>
 #include<math.h>
-#include "./logic.c"
 #define RED "\x1B[31m"
 #define GREEN "\x1B[32m"
 #define RESET "\x1B[0m"
+
+char *infix_to_postfix(char *infix, int len);
 
 char* results[] = {
     "1 23 23 * + 43 -",

@@ -227,3 +227,41 @@ void heap_sort_min_heap(int *array, int size){
 
     return;
 }
+
+int is_max_heap(max_heap h){
+    int left_child_index, right_child_index, i;
+
+    for(i = 0; i <= h.rear; i++){
+        left_child_index = 2 * i + 1;
+        right_child_index = 2 * i + 2;
+
+        if(left_child_index <= h.rear && h.array[left_child_index] > h.array[i]){
+            return 0;
+        }
+
+        if(right_child_index <= h.rear && h.array[right_child_index] > h.array[i]){
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int is_min_heap(min_heap h){
+        int left_child_index, right_child_index, i;
+
+    for(i = 0; i <= h.rear; i++){
+        left_child_index = 2 * i + 1;
+        right_child_index = 2 * i + 2;
+
+        if(left_child_index <= h.rear && h.array[left_child_index] < h.array[i]){
+            return 0;
+        }
+
+        if(right_child_index <= h.rear && h.array[right_child_index] < h.array[i]){
+            return 0;
+        }
+    }
+
+    return 1; 
+}

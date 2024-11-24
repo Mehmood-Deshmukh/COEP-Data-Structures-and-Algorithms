@@ -1,6 +1,8 @@
 #include "./Character Stack Implementation Using Singly LinkedList/header.h"
 #include<ctype.h>
 #include<stdlib.h>
+#include<string.h>
+
 int get_operator_precedence(char ch){
     switch(ch){
         case '+': 
@@ -84,4 +86,30 @@ char *infix_to_postfix(char *str, int len){
 
 
     return postfix;
+}
+
+void reverse_string(char* str, int len) {
+    int i;
+    for(i = 0; i < len/2; i++) {
+        char temp = str[i];
+        str[i] = str[len-1-i];
+        str[len-1-i] = temp;
+    }
+}
+
+
+char *infix_to_prefix(char *str){
+    int len = strlen(str);
+    reverse_string(str, len);
+
+    for(int i = 0; i < len; i++){
+        if(str[i] == '(') str[i] = ')';
+        else if(str[i] == ')') str[i] = '(';
+    }
+
+    char *postfix = infix_to_postfix(str, len);
+
+    reverse_string(postfix, strlen(postfix));
+
+    return postfix;    
 }

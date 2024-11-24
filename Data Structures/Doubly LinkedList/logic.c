@@ -108,6 +108,7 @@ void insert_at_index(List *l, int data, int index){
 
 int remove_start(List *l){
     if(is_empty(*l)) return INT_MIN;
+
     Node *removed_node;
     int removed_element;
 
@@ -127,7 +128,7 @@ int remove_start(List *l){
 }
 
 int remove_at_index(List *l, int index){
-    if(is_empty(*l) || index < 0 || index > length(*l)) return INT_MIN;
+    if(is_empty(*l) || index < 0 || index >= length(*l)) return INT_MIN;
     if(index == 0) return remove_start(l);
     
 

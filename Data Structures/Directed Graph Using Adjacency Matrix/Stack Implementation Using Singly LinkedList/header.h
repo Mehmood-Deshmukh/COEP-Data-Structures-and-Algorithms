@@ -11,3 +11,4 @@ int pop(Stack *s);
 int peek_stack(Stack s);
 int is_empty_stack(Stack s);
 void display_stack(Stack s);
+void free_stack(Stack *s);

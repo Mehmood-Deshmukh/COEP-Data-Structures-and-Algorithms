@@ -61,3 +61,9 @@ void display_stack(Stack s){
     printf("\b\b \n");
     return;
 }
+
+void free_stack(Stack *s){
+    while(!is_empty_stack(*s)){
+        pop(s);
+    }
+}

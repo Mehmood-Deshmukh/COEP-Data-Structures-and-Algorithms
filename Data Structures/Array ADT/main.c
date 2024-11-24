@@ -23,12 +23,12 @@ int main() {
     display(a2);
 
     printf("\nInserting 20 at position 2 in a2:\n");
-    insertAtIndex(&a2, 20, 2);
+    insert_at_index(&a2, 20, 2);
     display(a2);
 
 
     printf("\nRemoving element at index 1 from a2:\n");
-    int removedElement = removeAtIndex(&a2, 1);
+    int removedElement = remove_at_index(&a2, 1);
     printf("Removed Element: %d\n", removedElement);
     display(a2);
 

@@ -78,3 +78,8 @@ int is_empty_min_heap(MinHeap min_heap){
     return min_heap.size == 0;
 }
 
+void free_min_heap(MinHeap *min_heap){
+    min_heap->capacity = 0;
+    min_heap->size = 0;
+    free(min_heap->edges);
+}

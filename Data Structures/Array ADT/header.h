@@ -6,8 +6,8 @@ typedef struct Array{
 
 void init(Array *a, int size);
 void append(Array *a, int element);
-void insertAtIndex(Array *a, int element, int position);
-int removeAtIndex(Array *a, int position);
+void insert_at_index(Array *a, int element, int position);
+int remove_at_index(Array *a, int position);
 void display(Array a);
 int max(Array a);
 int min(Array a);

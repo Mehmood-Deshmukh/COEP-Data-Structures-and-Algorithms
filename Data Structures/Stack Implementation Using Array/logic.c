@@ -61,7 +61,7 @@ void sort(Stack *s){
     while(!is_empty(*s)){
         int data = pop(s);
 
-        while(!is_empty(temp) && peek(temp) > data){
+        while(!is_empty(temp) && peek(temp) < data){
             push(s, pop(&temp));
         }
 
@@ -71,4 +71,6 @@ void sort(Stack *s){
     while(!is_empty(temp)){
         push(s, pop(&temp));
     }
+
+    return;
 }

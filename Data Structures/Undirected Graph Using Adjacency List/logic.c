@@ -118,18 +118,17 @@ void breadth_first_search(Graph graph, int start_vertex){
     Queue queue;
     init_queue(&queue);
     enqueue(&queue, start_vertex);
+    visited[start_vertex] = 1;
 
     while(!is_empty_queue(queue)){
         int current_vertex = dequeue(&queue);
-        if(!visited[current_vertex]){
-            printf("%d ", current_vertex);
-            visited[current_vertex] = 1;
-        }
+        printf("%d ", current_vertex);
 
         Node *temp = graph.adjacency_list[current_vertex];
         while(temp){
             if(!visited[temp->vertex]){
                 enqueue(&queue, temp->vertex);
+                visited[temp->vertex] = 1;
             }
             temp = temp->next;
         }
@@ -141,10 +140,8 @@ void breadth_first_search(Graph graph, int start_vertex){
 }
 
 void depth_first_search_helper(Graph graph, int *visited, int current_vertex){
-    if(!visited[current_vertex]){
-        printf("%d ", current_vertex);
-        visited[current_vertex] = 1;
-    }
+    visited[current_vertex] = 1;
+    printf("%d ", current_vertex);
 
     Node *temp = graph.adjacency_list[current_vertex];
     while(temp){
@@ -242,40 +239,46 @@ int detect_cycle(Graph graph){
     return 0;
 }
 
+Edge find_minimum_edge_iteratively(Graph graph, int *visited){
+    int vertices = graph.vertices;
+    int min_weight = INT_MAX;
+    Edge edge = {-1, -1, -1};
+    for(int i = 0; i < vertices; i++){
+        if(visited[i]){
+            Node *temp = graph.adjacency_list[i];
+            while(temp){
+                if(!visited[temp->vertex] && temp->weight < min_weight){
+                    min_weight = temp->weight;
+                    edge.start_vertex = i;
+                    edge.end_vertex = temp->vertex;
+                    edge.weight = min_weight;
+                }
+                temp = temp->next;
+            }
+        }
+    }
+
+    return edge;
+}
+
 Edge *minimum_spanning_tree_prims_algorithm(Graph graph, int start_vertex){
     int vertices = graph.vertices;
     int *visited = (int *)calloc(vertices, sizeof(int));
 
     Edge *edges = (Edge *)malloc((vertices - 1) * sizeof(Edge));
-    int edge_count = 0, min_weight = INT_MAX;
-
-    visited[start_vertex] = 1;
+    int edge_count = 0, total_weight = 0;
 
     Edge edge;
-
-    int total_weight = 0;
+    visited[start_vertex] = 1;
 
     while(edge_count < vertices - 1){
-        min_weight = INT_MAX;
-        for(int i = 0; i < vertices; i++){
-            if(visited[i]){
-                Node *temp = graph.adjacency_list[i];
-                while(temp){
-                    if(!visited[temp->vertex] && temp->weight < min_weight){
-                        min_weight = temp->weight;
-                        edge.start_vertex = i;
-                        edge.end_vertex = temp->vertex;
-                    }
-                    temp = temp->next;
-                }
-            }
+        edge = find_minimum_edge_iteratively(graph, visited);
+        if (edge.weight == -1) {
+            free(visited);
+            free(edges);
+            return NULL;
         }
-
-        if(min_weight == INT_MAX){
-            break;
-        }
-
-        total_weight += min_weight;
+        total_weight += edge.weight;
         visited[edge.end_vertex] = 1;
         edges[edge_count++] = edge;
     }
@@ -389,6 +392,20 @@ Edge *minimum_spanning_tree_kruskals_algorithm(Graph graph){
     return mst;
 }
 
+int get_minimum_distanced_vertex_dijkstras_algorithm(int *visited, int *distance, int vertices){
+    int min_distance = INT_MAX;
+    int min_vertex = -1;
+
+    for(int i = 0; i < vertices; i++){
+        if(!visited[i] && distance[i] < min_distance){
+            min_distance = distance[i];
+            min_vertex = i;
+        }
+    }
+
+    return min_vertex;
+}
+
 Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vertex){
     int vertices = graph.vertices;
     int *visited = (int *)calloc(vertices, sizeof(int));
@@ -402,15 +419,7 @@ Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vert
     distance[start_vertex] = 0;
 
     for(int i = 0; i < vertices; i++){
-        int min_distance = INT_MAX;
-        int current_vertex = -1;
-
-        for(int j = 0; j < vertices; j++){
-            if(!visited[j] && distance[j] < min_distance){
-                min_distance = distance[j];
-                current_vertex = j;
-            }
-        }
+        int current_vertex = get_minimum_distanced_vertex_dijkstras_algorithm(visited, distance, vertices);
 
         if(current_vertex == -1) break;
 

@@ -2,6 +2,7 @@
 #include "stack.h"
 #include "queue.h"
 
+
 void init(BST *root){
     *root = NULL;
 }
@@ -214,10 +215,10 @@ void iterative_destroy_tree(BST *root){
 int recursive_get_height(BST root){
     if(!root) return 0;
 
-    int leftHeight = recursive_get_height(root->left);
-    int rightHeight = recursive_get_height(root->right);
+    int left_height = recursive_get_height(root->left);
+    int right_height = recursive_get_height(root->right);
 
-    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+    return 1 + (left_height > right_height ? left_height : right_height);
 }
 
 int iterative_get_height(BST root){
@@ -239,7 +240,6 @@ int iterative_get_height(BST root){
     }
 
     return height;
-
 }
 
 
@@ -342,6 +342,7 @@ void level_order_traversal(BST root){
             if(temp->left) enqueue(&q, temp->left);
             if(temp->right) enqueue(&q, temp->right);
         }
+        
     }
 
     printf("\n");
@@ -410,3 +411,140 @@ int recursive_count_non_leaf(BST root){
     return 1 + recursive_count_non_leaf(root->left) + recursive_count_non_leaf(root->right);
 }
 
+void collect_inorder_values(BST root, int *array, int *index){
+    if(!root) return;
+
+    collect_inorder_values(root->left, array, index);
+    array[*index] = root->data;
+    (*index)++;
+    collect_inorder_values(root->right, array, index);
+}
+
+void replace_preorder_with_inorder_values(BST *root, int *array, int *index){
+    if(!*root) return;
+
+    (*root)->data = array[*index];
+    (*index)++;
+    replace_preorder_with_inorder_values(&(*root)->left, array, index);
+    replace_preorder_with_inorder_values(&(*root)->right, array, index);
+}
+
+void convert_bst_to_min_heap(BST *root){
+    if(!*root) return;
+
+    int size = iterative_count_non_leaf(*root) + iterative_count_leaf(*root);
+
+    int *array = (int *)malloc(size * sizeof(int));
+
+    int index = 0;
+    collect_inorder_values(*root, array, &index);
+
+    index = 0;
+    replace_preorder_with_inorder_values(root, array, &index); 
+}
+
+int sum_absolute_difference(BST root, int *sum){
+    if(!root) return 0;
+
+    int left_sum = sum_absolute_difference(root->left, sum);
+    int right_sum = sum_absolute_difference(root->right, sum);
+
+    *sum += abs(left_sum - right_sum);
+
+
+    return left_sum + right_sum + root->data;
+}
+
+void store_nodes_in_array(BST root, Node *array[], int *index){
+    if(!root) return;
+
+    store_nodes_in_array(root->right, array, index);
+    array[*(index)] = root;
+    *(index)++;
+    store_nodes_in_array(root->left, array, index);
+}
+
+int is_leaf_node(Node *root){
+    return root && !root->left && !root->right;
+}
+
+
+void modify_pointers(BST *root){
+    if(!*root) return;
+
+    int total_nodes = iterative_count_leaf(*root) + iterative_count_non_leaf(*root);
+
+    Node *array[total_nodes];
+ 
+    int index = 0;
+    store_nodes_in_array(*root, array, &index);
+
+    for(int i = 0; i < total_nodes; i++){
+        Node *curr = array[i];
+
+        if(!is_leaf_node(curr)) continue;
+
+         if (i > 0) {
+            curr->left = array[i-1];
+        } else {
+            curr->left = NULL;  
+        }
+        
+        
+        if (i < total_nodes-1) {
+            curr->right = array[i+1];
+        } else {
+            curr->right = NULL;  
+        }
+
+    }
+}
+
+Node *iterative_find_inorder_successor(BST *root, Node *node){
+    if(!root) return NULL;
+
+    if(node->right){
+        Node *temp = node->right;
+        while(temp->left){
+            temp = temp->left;
+        }
+
+        return temp;
+    }
+
+    Node *successor = NULL;
+    Node *temp = *root;
+
+    while(temp){
+        if(node->data < temp->data){
+            successor = temp;
+            temp = temp->left;
+        }else if(node->data > temp->data){
+            temp = temp->right;
+        }else{
+            break;
+        }
+    }
+
+    return successor;
+}
+
+void print_leaf_nodes_in_ascending_order(BST root){
+    if(!root) return;
+
+    print_leaf_nodes_in_ascending_order(root->left);
+    if(is_leaf_node(root)) printf("%d ", root->data);
+    print_leaf_nodes_in_ascending_order(root->right);
+}
+
+void print_longest_path_from_root_to_leaf(BST root){
+    if(!root) return;
+
+    printf("%d ", root->data);
+
+    if(iterative_get_height(root->left) > iterative_get_height(root->right)){
+        print_longest_path_from_root_to_leaf(root->left);
+    }else{
+        print_longest_path_from_root_to_leaf(root->right);
+    }
+}

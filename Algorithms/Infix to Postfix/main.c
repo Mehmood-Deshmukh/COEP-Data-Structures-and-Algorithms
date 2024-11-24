@@ -1,10 +1,12 @@
 #include<stdio.h>
 #include<string.h>
-#include "./logic.c"
+#include <stdlib.h>
 
 #define RED "\x1B[31m"
 #define GREEN "\x1B[32m"
 #define RESET "\x1B[0m"
+
+char *infix_to_postfix(char *infix, int len);
 
 char* results[] = {
     "1 23 23 * + 43 -",      
@@ -23,7 +25,7 @@ void printResult(char *postfix, char *result, int index) {
 
 void testInfixToPostfix(char *infix, int index) {
     int len = strlen(infix);
-    char *postfix = infixToPostfix(infix, len);
+    char *postfix = infix_to_postfix(infix, len);
 
     if (postfix) {
         printf("Infix Expression: %s\n", infix);

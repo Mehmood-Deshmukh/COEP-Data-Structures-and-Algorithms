@@ -53,6 +53,7 @@ void insert_at_beginning(List *l, int data){
     *l = new_node;
     return;
 }
+
 int remove_end(List *l){
     Node *temp, *removed_node;
     int removed_element;
@@ -81,6 +82,7 @@ int remove_end(List *l){
     return removed_element;
     
 }
+
 int remove_beginning(List *l){
     if(!*l) return INT_MIN;
 
@@ -147,6 +149,7 @@ void add_node_at_position(List *l, int data, int position){
 
     return;
 }
+
 int length(List l){
     Node *temp = l;
     int length = 0;
@@ -226,7 +229,7 @@ void reverse_even(List *l){
     Node *current = *l;
 
     while (current) {
-        if (current->data % 2) {
+        if (current->data % 2 == 0) {
             if (!start) start = current;
             end = current;
         } else {
