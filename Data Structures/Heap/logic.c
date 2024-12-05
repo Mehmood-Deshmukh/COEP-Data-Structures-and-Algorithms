@@ -111,6 +111,27 @@ void heapify_max_heap(max_heap *h){
     return;
 }
 
+void recursive_heapify_max_heap(max_heap *h, int index){
+    int left_child_index = 2 * index + 1;
+    int right_child_index = 2 * index + 2;
+    int largest_child_index = index;
+
+    if(left_child_index <= h->rear && h->array[left_child_index] > h->array[largest_child_index]){
+        largest_child_index = left_child_index;
+    }
+
+    if(right_child_index <= h->rear && h->array[right_child_index] > h->array[largest_child_index]){
+        largest_child_index = right_child_index;
+    }
+
+    if(largest_child_index != index){
+        swap(&h->array[index], &h->array[largest_child_index]);
+        recursive_heapify_max_heap(h, largest_child_index);
+    }
+
+    return;
+}
+
 void heapify_min_heap(min_heap *h){
     int i = 0;
     int left_child_index;
@@ -136,6 +157,28 @@ void heapify_min_heap(min_heap *h){
 
         swap(&h->array[i], &h->array[smallest_child_index]);
         i = smallest_child_index;
+    }
+
+    return;
+}
+
+
+void recursive_heapify_min_heap(min_heap *h, int index){
+    int left_child_index = 2 * index + 1;
+    int right_child_index = 2 * index + 2;
+    int smallest_child_index = index;
+
+    if(left_child_index <= h->rear && h->array[left_child_index] < h->array[smallest_child_index]){
+        smallest_child_index = left_child_index;
+    }
+
+    if(right_child_index <= h->rear && h->array[right_child_index] < h->array[smallest_child_index]){
+        smallest_child_index = right_child_index;
+    }
+
+    if(smallest_child_index != index){
+        swap(&h->array[index], &h->array[smallest_child_index]);
+        recursive_heapify_min_heap(h, smallest_child_index);
     }
 
     return;

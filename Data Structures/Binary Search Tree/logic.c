@@ -77,6 +77,8 @@ void recursive_insert(BST *root, int data){
         return;
     }
 
+    if(data == temp->data) return;
+
     if(data < temp->data) recursive_insert(&temp->left, data);
     else recursive_insert(&temp->right, data);
 }

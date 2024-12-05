@@ -470,7 +470,8 @@ Edge **shortest_path_from_source_dijkstras_algorithm(Graph graph, int start_vert
 
 
 void free_graph(Graph *graph) {
-    for (int i = 0; i < graph->vertices; i++) {
+    int vertices = graph->vertices;
+    for (int i = 0; i < vertices; i++) {
         Node *temp = graph->adjacency_list[i];
         while (temp) {
             Node *prev = temp;
