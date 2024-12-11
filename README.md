@@ -272,6 +272,12 @@ gcc -Wall ./main.c ./logic.c -o main
 
 ```
 
+### References
+
+- **Fundamentals of Data Structures in C by Horowitz, Sahni, and Anderson-Freed**
+- **The C Programming Language by Brian W. Kernighan and Dennis M. Ritchie**
+- **Problem Solving Using Procedural Programming presentations by Prof Abhijit A. M**
+
 ### Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
