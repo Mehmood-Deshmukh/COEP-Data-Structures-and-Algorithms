@@ -1,0 +1,9 @@
+Bubble Sort
+https://liveexample.pearsoncmg.com/liang/animation/web/BubbleSort.html
+
+Selection sort
+https://liveexample.pearsoncmg.com/liang/animation/web/SelectionSort.html
+
+
+Insertion sort
+https://liveexample.pearsoncmg.com/liang/animation/web/InsertionSort.html

@@ -1,0 +1,151 @@
+Files, Folders.
+---
+File: which stores data, and has  name.
+Folder: a container for files. 
+On Computers, Folders can contain either folders or files.
+Subfolder: a folder within a folder. 
+
+Home Folder.  - special name for a per-user folder.
+
+On Windows, 
+C:, D:. E: 
+Each contains a "tree" of files 
+
+Namespace = collection of all file names
+On Windows, the namespace is a "forest" (C:, D:, E:, each is a tree)
+
+Linux, Unix, MAC, etc: The namespace is only a tree.
+
+On Linux, the top-most folder is called "/" (slash)
+Some people, call it root, but I don't (because there is a folder called /root)
+
+Suppose, there is folder home in /
+and a folder abhijit in home
+and a file a.c in abhijit
+Then
+/home/abhijit/a.c 
+COMPLETE Path name of the file a.c
+Here the first "/" is name of top folder
+and subsequent "/" are separators. 
+
+"Home Folder", is a name for /home/abhijit
+"Home Folder" is not /home
+"Home Folder" is per user.
+If your username is "abhijit", then typically the Home folder is /home/abhijit
+If your username is "student", then typically the Home folder is /home/student
+Shortcut notation for Home Folder is ~ 
+
+Lets use terminal
+--
+abhijit@abhijit-laptop:~$ 
+is called prompt. 
+it is shown by a program called "shell".
+let's not be bothered about why the prompt is like that. 
+
+The "terminal" is the Window, which has minimize/maximize/close buttons.
+The prompt is displayed by another software called "shell".
+
+Every program/application has a "current working directory"
+"pwd" gives the current/present working directory of the shell program. 
+
+Some very basic things about commands:
+The first word after prompt is called "command"
+Command may be followed by one or more arguments, separated by spaces, on the same line
+Command is a software/application/program 
+
+When you type a command, you are requesting the OS/kernel to run it.
+
+Arguments are handled by the programs of commands.
+
+Try these commands
+$ pwd
+$ cd /tmp/
+$ pwd
+$ cd /
+$ pwd 
+$ cd
+$ pwd
+$ ls
+
+---
+More about path names
+---
+Absolute path names
+Begin with a /
+e.g.  /usr/include/stdio.h
+
+Relative path name
+begin with a . or .. 
+. means current folder (pwd)
+.. means parent folder
+
+e.g.  ./pspp
+Means pspp in current working directory
+
+Imp:
+if you forget to write "./"
+it is assumed to be there , as part of "arguments" (not as part of command)
+
+
+***
+The process of writing and running C programs
+is a 3 STEP process.
+---
+1. Editing
+---
+Using a software called "editor" to write the code and save it in a file (.c) 
+
+Examples of editors: gedit, notepad
+vi, emacs
+vscode, sublime text, atom, ... 
+
+End result: .c  file	
+
+Let's say I saved my file in /home/abhijit/pspp/mult.c
+
+---
+2. Compilation
+---
+Using a software called "compiler" which convert the C code file into a machine code file.
+
+End result: executable machine code file.
+
+Commands for compilation
+$ cd /home/abhijit/pspp
+$ cc mult.c -o xyz
+
+The above command tells C Compiler (cc or gcc) to convert the C code from mult.c into machine code, and then save the machine code in the file xyz
+
+---
+3. Execution
+---
+My program is there in the executable file called 
+"xyz"
+To run it, I can use any of the folowing
+$ ./xyz
+$ /home/abhijit/pspp/xyz
+
+If the pwd is /home/abhijit, then
+$ ./pspp/xyz 
+
+
+More about commands
+----
+A "command" is some executable file.
+To find out the executable file for "ls" try this
+$ which ls
+
+Also, try
+$ which pwd
+$ which which 
+
+
+SHell
+---
+Shell program does this:
+
+1. Show prompt
+2. Read command and arguments
+3. Ask the kernel to execute the command with arguments
+4. goto 1
+
